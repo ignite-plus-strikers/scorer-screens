@@ -4,7 +4,7 @@ import {BrowserRouter as Router,Route,Link,Switch} from "react-router-dom"
 import {createMuiTheme , MuiThemeProvider} from '@material-ui/core/styles'
 import MatchSelection from './component/MatchSelection'
 import PreMatch from './component/PreMatch'
-import Header from './component/Header'
+import Header from './component/Header/HeaderComponent'
 import ScoringScreen from './component/ScoringScreen'
 import ScoreCard from './component/ScoreCard'
 
