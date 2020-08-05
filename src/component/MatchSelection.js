@@ -66,7 +66,7 @@ function MatchSelection() {
             <Divider />
             <CardActions>
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/prematch" disabled>Pre-match Screen</Button>
-              <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen">Scoring Screen</Button>
+              <Button variant="contained" color="primary" href="/scorer/ScoringScreen">Scoring Screen</Button>
             </CardActions>
             </Card>
           </Grid>
