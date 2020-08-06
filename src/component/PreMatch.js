@@ -106,6 +106,7 @@ class OutlinedInputAdornments extends React.Component {
   constructor(props) {
     super(props)
   this.state = {
+      player: [],
     selectedValue: 'a',
     selectedValue: 'b',
     toss: "",
@@ -162,9 +163,22 @@ class OutlinedInputAdornments extends React.Component {
 
   }
   handleChange = prop => event => {
+    var isChecked = event.target.checked;
+    //var player = this.state.player
     
-
-    this.setState({ [prop]: event.target.value });
+    if (isChecked == true) {
+        this.state.player.push(prop)
+    }
+    else {
+        for(var i = this.state.player.length - 1; i >= 0; i--) {
+            if(this.state.player[i] === prop) {
+                this.state.player.splice(i, 1);
+            }
+        }
+    }
+   
+    console.log(this.state.player)
+ // this.setState({ [prop]: event.target.value });
     //this.setState({ selectedValue: event.target.value });
     
   };
@@ -249,7 +263,7 @@ refreshTeamPlayers() {
               </FormLabel>
              
               <FormControlLabel
-             value={this.state.selectedValue}
+             //value={this.state.selectedValue}
             onChange={this.handleChange}
             value={this.state.selectedValue}
             control={<Radio color="primary" />}
@@ -257,7 +271,7 @@ refreshTeamPlayers() {
             labelPlacement="start"
           />
           <FormControlLabel
-            value={this.state.selectedValue}
+           // value={this.state.selectedValue}
             onChange={this.handleChange}
             control={<Radio color="primary" />}
             label="West Indies"
@@ -414,7 +428,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.AhmedShehzad}
+                     
                       onChange={this.handleChange("AhmedShehzad")}
                       value="Ahmed Shehzad"
                       color="primary"
@@ -426,7 +440,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.AsifAli}
+                      
                       onChange={this.handleChange("AsifAli")}
                       value="Asif Ali"
                       color="primary"
@@ -438,7 +452,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.BabarAzam}
+                      
                       onChange={this.handleChange("BabarAzam")}
                       value="Babar Azam"
                       color="primary"
@@ -450,7 +464,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.FaheemAshraf}
+                     
                       onChange={this.handleChange("FaheemAshraf")}
                       value="Faheem Ashraf"
                       color="primary"
@@ -462,7 +476,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.FakharZaman}
+                     // checked={this.state.FakharZaman}
                       onChange={this.handleChange("FakharZaman")}
                       value="Fakhar Zaman"
                       color="primary"
@@ -474,7 +488,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.HasanAli}
+                     // checked={this.state.HasanAli}
                       onChange={this.handleChange("HasanAli")}
                       value="Hasan Ali"
                       color="primary"
@@ -491,7 +505,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.HussainTalat}
+                    //  checked={this.state.HussainTalat}
                       onChange={this.handleChange("HussainTalat")}
                       value="Hussain Talat"
                       color="primary"
@@ -503,7 +517,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.MohammadAmir}
+                    //  checked={this.state.MohammadAmir}
                       onChange={this.handleChange("MohammadAmir")}
                       value="Mohammad Amir"
                       color="primary"
@@ -515,7 +529,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.MohmamadNawar}
+                    //  checked={this.state.MohmamadNawar}
                       onChange={this.handleChange("MohmamadNawar")}
                       value="Mohmamad Nawar"
                       color="primary"
@@ -527,7 +541,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.RahatAli}
+                    //  checked={this.state.RahatAli}
                       onChange={this.handleChange("RahatAli")}
                       value="Rahat Ali"
                       color="primary"
@@ -539,7 +553,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.SarfrazAhmed}
+                    //  checked={this.state.SarfrazAhmed}
                       onChange={this.handleChange("SarfrazAhmed")}
                       value="Sarfraz Ahmed"
                       color="primary"
@@ -557,7 +571,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.ShadabKhan}
+                     // checked={this.state.ShadabKhan}
                       onChange={this.handleChange("ShadabKhan")}
                       value="Shadab Khan"
                       color="primary"
@@ -569,7 +583,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.ShaheenAfridi}
+                    //  checked={this.state.ShaheenAfridi}
                       onChange={this.handleChange("ShaheenAfridi")}
                       value="checkedB"
                       color="primary"
@@ -581,7 +595,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.ShoaibMalik}
+                    //  checked={this.state.ShoaibMalik}
                       onChange={this.handleChange("ShoaibMalik")}
                       value="Shoaib Malik"
                       color="primary"
@@ -593,7 +607,7 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checkedO}
+                     // checked={this.state.checkedO}
                       onChange={this.handleChange("UsmanKhan")}
                       value="UsmanKhan"
                       color="primary"
@@ -611,7 +625,7 @@ refreshTeamPlayers() {
               
               <Grid item xs={3}>
               <h3>Playing 11</h3>
-              <TextareaAutosize aria-label="minimum height" rowsMin={45} value={this.state.AsifAli, this.state.AhmedShehzad,this.state.BabarAzam} />
+              <TextareaAutosize aria-label="minimum height" rowsMin={45} value={this.state.player.join("\n")} />
               </Grid>
               </Grid>
               <br />
