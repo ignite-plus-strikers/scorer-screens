@@ -1,37 +1,40 @@
-import React from 'react';
-import SideNav from './component/SideNav'
+import React, {Component} from 'react';
 import './App.css';
-import {BrowserRouter as Router,Route,Link,Switch} from "react-router-dom"
+import {BrowserRouter as Router,Route} from "react-router-dom"
 import {createMuiTheme , MuiThemeProvider} from '@material-ui/core/styles'
 import MatchSelection from './component/MatchSelection'
 import PreMatch from './component/PreMatch'
 import Header from './component/Header'
 import ScoringScreen from './component/ScoringScreen'
+import Clock from './component/Clock'
+import {green,yellow,blue,pink} from "@material-ui/core/colors";
+
 
 const theme = createMuiTheme({
-  palette: {
-      primary: {
-          main: '#00bcd4',
-      },
-      secondary: {
-          main: '#a5d1e1',
-      },
+ palette: {
+        primary: {
+            main: blue[500],
+        },
+        secondary: {
+            main: pink[500],
+        },
+    },
       text:{
-        primary:'#00bcd4',
+        primary:blue[500],
         secondary:'#212121'
       },
       spacing: 8,
   },
-});
+);
 
 
-class App extends React.Component{
+class App extends Component{
  
   render(){
     return(
       <MuiThemeProvider theme={theme}>
         <Header />
-
+        <div style={{marginLeft:1200,marginTop:20}}><Clock /></div>
         <Router>
           <Route exact path="/scorer/MatchSelection" component={MatchSelection} />
           <Route path="/scorer/PreMatch" component={PreMatch} />

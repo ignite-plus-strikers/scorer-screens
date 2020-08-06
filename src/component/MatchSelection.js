@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,9 +7,12 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Divider, Container } from '@material-ui/core';
+//import MatchSelectionService from "../service/MatchSelectionService"
+import Clock from './Clock';
+import axios from 'axios'
 
 
-const useStyles = makeStyles({
+const useStyles = theme => ({
   root: {
     width: 400,
     height:'auto',
@@ -30,21 +33,35 @@ const useStyles = makeStyles({
 
 });
 
-function MatchSelection() {
-  var tempDate = new Date();
-  var date = tempDate.getDate() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getFullYear() +' '+ tempDate.getHours()+':'+ tempDate.getMinutes()+':'+ tempDate.getSeconds();
-  const currDate = date;
-    const classes = useStyles();
+class MatchSelection extends React.Component{
+
+    constructor(props){
+      super(props);
+      this.state={
+        fixtures:[]
+      };
+    }
+
+    componentDidMount(){
+      axios.get("http://localhost:8080/cricket-tournament/fixtures")
+          .then(response => response.data)
+          .then((data) => {
+            this.setState({fixtures:data});
+          });
+    }
+
+  render(){
+    const {classes} = this.props;
     return (
       <Container>
-        <Typography variant="subtitle1" align="right" color="textPrimary" style={{marginTop:10}}>{currDate}</Typography>
-        <Typography variant="h5" color="textSecondary" align="center" style={{marginTop:20}}>Welcome Scorer Sanjay! Happy Scoring! </Typography>
-        <Typography variant="h5" color="textSecondary" align="left" style={{marginTop:20,marginLeft:80}} >Live Matches</Typography>
-            <Card className={classes.root} variant="outlined">
+        
+        <Typography variant="h5" color="primary" align="center" style={{marginTop:20}}>Welcome Scorer! Happy Scoring! </Typography>
+        <Typography variant="h5" align="left" style={{marginTop:20,marginLeft:80}} >Live Matches</Typography>
+              <Card className = {classes.root} variant="outlined">
               <CardContent>
-              <Typography variant="h5" align="center">India vs England</Typography>
+              <Typography variant="h5" color="primary" align="center">Pakistan vs West Indies</Typography>
               <Divider />
-              <Typography variant="body1" align="center" color="textSecondary">Chinnaswamy Stadium, Bangalore,India 10 July 2020 @ 13:30 </Typography>
+              <Typography variant="body1" align="center" color="textSecondary">2ns T20 at Kensington Oval,Barbados scheduled on 06-08-2020 05:00:00 pm</Typography>
               </CardContent>
             <Divider />
             <CardActions>
@@ -53,40 +70,33 @@ function MatchSelection() {
             </CardActions>
             </Card>
          
-
-        <Typography variant="h5" color="textSecondary" align="left" style={{marginTop:20,marginLeft:80}} >Upcoming Matches</Typography>
+        <Typography variant="h5" align="left" style={{marginTop:20,marginLeft:80}} >Upcoming Matches</Typography>
+        
+        
         <Grid container spacing={6} direction="row" justify="flex-start" alignItems="flex-start">
           <Grid item >
+          {this.state.fixtures.map((fixture) => (
             <Card className={classes.root} variant="outlined">
               <CardContent>
-              <Typography variant="h5" align="center">India vs England</Typography>
+              <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
               <Divider />
-              <Typography variant="body1" align="center" color="textSecondary">Chinnaswamy Stadium, Bangalore,India 13 July 2020 @ 13:30</Typography>
+              <Typography variant="body1" align="center" color="textSecondary">{fixture.description} at {fixture.venue} scheduled on {fixture.fixture_date} {fixture.fixture_time}</Typography>
               </CardContent>
             <Divider />
             <CardActions>
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/prematch" disabled>Pre-match Screen</Button>
-              <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen">Scoring Screen</Button>
+              <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen"disabled>Scoring Screen</Button>
             </CardActions>
             </Card>
+           ))}
           </Grid>
-
-          <Grid item>
-            <Card className={classes.root} variant="outlined">
-              <CardContent>
-                <Typography variant="h5" align="center">India vs England</Typography>
-                <Divider />
-                <Typography variant="body1" align="center" color="textSecondary">Chinnaswamy Stadium, Bangalore,India 13 July 2020 @ 13:30</Typography>
-              </CardContent>
-              <Divider />
-              <CardActions>
-                <Button variant="contained" color="primary" href="/scorer/MatchSelection/prematch">Pre-match Screen</Button>
-                <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen" disabled>Scoring Screen</Button>
-              </CardActions>
-            </Card>
           </Grid>
-        </Grid>
         </Container>
+       
+        
     );
+  }
 }
- export default MatchSelection;
+
+
+export default withStyles(useStyles)(MatchSelection);

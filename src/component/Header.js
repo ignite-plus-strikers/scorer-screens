@@ -1,13 +1,14 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import appbar from '../assests/appbar.png'
+import { Container } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
   root: {
     flexGrow: 1,
   },
@@ -17,22 +18,18 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  appbar:{
-      backgroundImage:"src/assests/appbar.png",
+});
+
+class Header extends React.Component{
+ render(){  
+    return(
+              <div>
+                  <Button variant="contained" color="primary" style={{marginTop:20,position:"absolute",marginLeft:1200}}> Logout</Button>
+                  <img className="header_img" src={appbar} alt="header" style={{width:1380,height:80}} ></img>
+                 
+              </div>
+      );
   }
-}));
-
-export default function ButtonAppBar() {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-            <img src={appbar} align="left" style={{height:70,width:1260,marginLeft:0}}/>
-          <Button variant="contained" color="primary" position="absolute" startIcon={<AccountCircleIcon />}> Logout</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
 }
+
+export default withStyles(useStyles)(Header);
