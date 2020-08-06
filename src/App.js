@@ -8,6 +8,7 @@ import Header from './component/Header'
 import ScoringScreen from './component/ScoringScreen'
 import Clock from './component/Clock'
 import {green,yellow,blue,pink} from "@material-ui/core/colors";
+import ScoreCard from './component/ScoreCard';
 
 
 const theme = createMuiTheme({
@@ -39,6 +40,7 @@ class App extends Component{
           <Route exact path="/scorer/MatchSelection" component={MatchSelection} />
           <Route path="/scorer/PreMatch" component={PreMatch} />
           <Route path="/scorer/ScoringScreen" component={ScoringScreen} />
+          <Route path="/scorer/ScoreCard" component={ScoreCard} />
         </Router>
       </MuiThemeProvider>
     );

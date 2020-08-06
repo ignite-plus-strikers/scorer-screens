@@ -65,8 +65,8 @@ class MatchSelection extends React.Component{
               </CardContent>
             <Divider />
             <CardActions>
-              <Button variant="contained" color="primary" href="/scorer/MatchSelection/prematch">Pre-match Screen</Button>
-              <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen">Scoring Screen</Button>
+              <Button variant="contained" color="primary" href="/scorer/prematch">Pre-match Screen</Button>
+              <Button variant="contained" color="primary" href="/scorer/ScoringScreen">Scoring Screen</Button>
             </CardActions>
             </Card>
          
