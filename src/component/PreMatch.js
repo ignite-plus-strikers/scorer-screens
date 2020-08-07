@@ -50,17 +50,11 @@ const styles = theme => ({
     display: "flex",
     flexWrap: "wrap"
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
+  
   margin: {
     margin: theme.spacing.unit
   },
-  textField: {
-    flexBasis: 950
-  },
+  
   list: {
     width: "100%",
     maxWidth: "300px",
@@ -125,19 +119,20 @@ class OutlinedInputAdornments extends React.Component {
     ShaheenAfridi: false,
     ShoaibMalik: false,
     UsmanKhan: false,
-    checked1: true,
-    checked2: false,
-    checked3: false,
-    checked4: false,
-    checked5: false,
-    checked6: false,
-    checked7: false,
-    checked8: false,
-    checked9: false,
-    checked10: false,
-    checked11: false,
-    checked12: false,
-    checked13: false,
+    
+    AndreFletcher: true,
+    AndreMcCarthy: false,
+    ChadwickWalton: false,
+    DeneshRamdin: false,
+    JasonMohammad: false,
+    KeernoPaul: false,
+    KesrickWilliams: false,
+    MarlonSamuels: false,
+    OdeanSmith: false,
+    RayadEmrit: false,
+    RavmanPowell: false,
+    SmualBadree: false,
+    VeerasamyPermaul: false,
     top100Films:"",
     umpires: [],
     first_name: "",
@@ -237,8 +232,7 @@ refreshTeamPlayers() {
     const error = [AhmadShehzad,AsifAli,BabarAzam,FaheemAshraf,FakharZaman,HasanAli, HussainTalat,MohammadAmir,MohmamadNawar,RahatAli,SarfrazAhmed,ShadadKhan,ShaheenAfridi,ShoaibMalik, UsmanKhan].filter(v => v).length !== 11;
     
     return (
-      <div className={classes.root}>
-    <Grid container spacing={2}>
+    <Grid container spacing={2} className={classes.root}>
       <Grid item xs={4}
             
           >
@@ -248,11 +242,11 @@ refreshTeamPlayers() {
             
               elevation={3}
               style={{
-                width: "550px",
+                width: "400px",
                 height: "1300px",
                 paddingLeft: "2%",
                 paddingRight: "0%",
-                paddingTop: "1%"
+                paddingTop: "4%"
               }}
             >
               <FormLabel
@@ -402,11 +396,11 @@ refreshTeamPlayers() {
             <Paper
              elevation={3}
               style={{
-                width: "550px",
+                width: "400px",
                 height: "1300px",
                 paddingLeft: "2%",
-                paddingRight: "7%",
-                paddingTop: "1%"
+                paddingRight: "1%",
+                paddingTop: "4%"
               }}
             >
               <center>
@@ -698,11 +692,11 @@ refreshTeamPlayers() {
             <Paper
              elevation={3}
               style={{
-                width: "550px",
+                width: "400px",
                 height: "1300px",
                 paddingLeft: "2%",
-                paddingRight: "8%",
-                paddingTop: "1%"
+                paddingRight: "1%",
+                paddingTop: "4%"
               }}
             >
               <center>
@@ -720,9 +714,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked1}
-                      onChange={this.handleChange("checked1")}
-                      value="Ahmed Shehzad"
+                   //   checked={this.state.AndreFletcher}
+                      onChange={this.handleChange("AndreFletcher")}
+                      value="Andre Fletcher"
                       color="primary"
                     />
                   }
@@ -731,9 +725,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked2}
-                      onChange={this.handleChange("checked2")}
-                      value="checkedB"
+                   //   checked={this.state.AndreMcCarthy}
+                      onChange={this.handleChange("AndreMcCarthy")}
+                      value="Andre McCarthy"
                       color="primary"
                     />
                   }
@@ -742,9 +736,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked3}
-                      onChange={this.handleChange("checked3")}
-                      value="checkedC"
+                   //   checked={this.state.ChadwickWalton}
+                      onChange={this.handleChange("ChadwickWalton")}
+                      value="Chadwick Walton"
                       color="primary"
                     />
                   }
@@ -753,9 +747,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked4}
-                      onChange={this.handleChange("checked4")}
-                      value="checkedD"
+                   //   checked={this.state.DeneshRamdin}
+                      onChange={this.handleChange("DeneshRamdin")}
+                      value="Denesh Ramdin"
                       color="primary"
                     />
                   }
@@ -764,9 +758,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked5}
-                      onChange={this.handleChange("checked5")}
-                      value="checkedE"
+                  //    checked={this.state.JasonMohammad}
+                      onChange={this.handleChange("JasonMohammad")}
+                      value="Jason Mohammad"
                       color="primary"
                     />
                   }
@@ -781,9 +775,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked6}
-                      onChange={this.handleChange("checked6")}
-                      value="Ahmed Shehzad"
+                  //    checked={this.state.KeernoPaul}
+                      onChange={this.handleChange("KeernoPaul")}
+                      value="Keerno Paul"
                       color="primary"
                     />
                   }
@@ -792,9 +786,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked7}
-                      onChange={this.handleChange("checked7")}
-                      value="checkedB"
+                  //    checked={this.state.KesrickWilliams}
+                      onChange={this.handleChange("KesrickWilliams")}
+                      value="Kesrick Williams"
                       color="primary"
                     />
                   }
@@ -803,9 +797,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked8}
-                      onChange={this.handleChange("checked8")}
-                      value="checkedC"
+                  //    checked={this.state.MarlonSamuels}
+                      onChange={this.handleChange("MarlonSamuels")}
+                      value="Marlon Samuels"
                       color="primary"
                     />
                   }
@@ -814,9 +808,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked9}
-                      onChange={this.handleChange("checked9")}
-                      value="checkedD"
+                  //    checked={this.state.OdeanSmith}
+                      onChange={this.handleChange("OdeanSmith")}
+                      value="Odean Smith"
                       color="primary"
                     />
                   }
@@ -831,9 +825,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked10}
-                      onChange={this.handleChange("checked10")}
-                      value="Ahmed Shehzad"
+                  //    checked={this.state.RayadEmrit}
+                      onChange={this.handleChange("RayadEmrit")}
+                      value="Rayad Emrit"
                       color="primary"
                     />
                   }
@@ -842,9 +836,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked11}
-                      onChange={this.handleChange("checked11")}
-                      value="checkedB"
+                  //    checked={this.state.SamualBadree}
+                      onChange={this.handleChange("SamualBadree")}
+                      value="Samual Badree"
                       color="primary"
                     />
                   }
@@ -853,9 +847,9 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked12}
-                      onChange={this.handleChange("checked12")}
-                      value="checkedC"
+                  //    checked={this.state.VeerasamyPermaul}
+                      onChange={this.handleChange("Veerasamy Permaul")}
+                      value="Veerasamy Permaul"
                       color="primary"
                     />
                   }
@@ -864,13 +858,13 @@ refreshTeamPlayers() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked13}
-                      onChange={this.handleChange("checked13")}
-                      value="checkedD"
+                  //    checked={this.state.RovmanPowell}
+                      onChange={this.handleChange("RovmanPowell")}
+                      value="Rovman Powell"
                       color="primary"
                     />
                   }
-                  label="Usman Khan"
+                  label="Rovman Powell"
                 />
 
                 <Divider />
@@ -962,7 +956,7 @@ refreshTeamPlayers() {
             </Paper>
                 </Grid>
     </Grid>
-      </div>
+  
           
         
     );

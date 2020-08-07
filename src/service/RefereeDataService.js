@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const REFEREE_API_URL = 'http://localhost:8080/cricket-tournament'
+const REFEREE_API_URL = 'http://localhost:8081/cricket-tournament'
 
 
 class RefereeDataService {
