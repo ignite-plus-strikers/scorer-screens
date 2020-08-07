@@ -230,9 +230,11 @@ refreshTeamPlayers() {
     const { classes } = this.props;
     const { AhmadShehzad,AsifAli,BabarAzam,FaheemAshraf,FakharZaman,HasanAli, HussainTalat,MohammadAmir,MohmamadNawar,RahatAli,SarfrazAhmed,ShadadKhan,ShaheenAfridi,ShoaibMalik, UsmanKhan} = this.state;
     const error = [AhmadShehzad,AsifAli,BabarAzam,FaheemAshraf,FakharZaman,HasanAli, HussainTalat,MohammadAmir,MohmamadNawar,RahatAli,SarfrazAhmed,ShadadKhan,ShaheenAfridi,ShoaibMalik, UsmanKhan].filter(v => v).length !== 11;
-    
+    var player = this.state.player;
+    var abc = ["kavya", "asha", "meera"];
     return (
-    <Grid container spacing={2} className={classes.root}>
+      <div className={classes.root}> 
+      <Grid container spacing={2} >
       <Grid item xs={4}
             
           >
@@ -617,9 +619,9 @@ refreshTeamPlayers() {
 
               </Grid>
               
-              <Grid item xs={3}>
+              <Grid item xs={2}>
               <h3>Playing 11</h3>
-              <TextareaAutosize aria-label="minimum height" rowsMin={45} value={this.state.player.join("\n")} />
+              <TextareaAutosize aria-label="empty textarea"  value={abc.join("\n")}/>
               </Grid>
               </Grid>
               <br />
@@ -871,7 +873,7 @@ refreshTeamPlayers() {
               </FormGroup>
                          
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
               <h3>Playing 11</h3>
               <TextareaAutosize aria-label="minimum height" rowsMin={45} type="text" id="selectedtext" />
               </Grid>
@@ -939,6 +941,7 @@ refreshTeamPlayers() {
                 variant="contained"
                 style={{ width: "150px" }}
                 className={classes.button}
+                href=" /scorer/MatchSelection"
               >
                 Back
               </Button>
@@ -946,6 +949,7 @@ refreshTeamPlayers() {
                 variant="contained"
                 style={{ width: "150px" }}
                 className={classes.button}
+                href="/scorer/ScoringScreen"
               >
                 Submit
               </Button>
@@ -956,7 +960,7 @@ refreshTeamPlayers() {
             </Paper>
                 </Grid>
     </Grid>
-  
+  </div>
           
         
     );
