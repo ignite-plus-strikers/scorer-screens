@@ -6,6 +6,7 @@ import MatchSelection from './component/MatchSelection'
 import PreMatch from './component/PreMatch'
 import Header from './component/Header'
 import ScoringScreen from './component/ScoringScreen'
+//import NewScoringScreen from './component/NewScoringScreen'
 import ScoreCard from './component/ScoreCard'
 
 
@@ -37,6 +38,8 @@ class App extends React.Component{
           <Route exact path="/scorer/MatchSelection" component={MatchSelection} />
           <Route path="/scorer/PreMatch" component={PreMatch} />
           <Route path="/scorer/ScoringScreen" component={ScoringScreen} />
+        
+
           <Route path="/scorer/ScoreCard" component={ScoreCard} />
         </Router>
       </MuiThemeProvider>
