@@ -79,31 +79,31 @@ class ScoringScreen extends React.Component {
         current_bowler : 'Smith',
         batting_team : 'India',
         bowling_team : 'Australia',
-        batting_team_score : JSON.parse(localStorage.getItem('data')).batting_team_score,
-        batting_team_wickets : JSON.parse(localStorage.getItem('data')).batting_team_wickets,
-        total_overs : JSON.parse(localStorage.getItem('data')).total_overs,
+        batting_team_score : 0,//JSON.parse(localStorage.getItem('data')).batting_team_score,
+        batting_team_wickets : 0,//JSON.parse(localStorage.getItem('data')).batting_team_wickets,
+        total_overs : 0,//JSON.parse(localStorage.getItem('data')).total_overs,
         balls_per_over : 6,
         striker : {
-          runs : JSON.parse(localStorage.getItem('data')).striker.runs ,
-          balls : JSON.parse(localStorage.getItem('data')).striker.balls,
-          strike_rate : JSON.parse(localStorage.getItem('data')).striker.strike_rate,
-          fours : JSON.parse(localStorage.getItem('data')).striker.fours,
-          sixes : JSON.parse(localStorage.getItem('data')).striker.sixes
+          runs : 0,//JSON.parse(localStorage.getItem('data')).striker.runs ,
+          balls : 0,//JSON.parse(localStorage.getItem('data')).striker.balls,
+          strike_rate : 0,//JSON.parse(localStorage.getItem('data')).striker.strike_rate,
+          fours : 0,//JSON.parse(localStorage.getItem('data')).striker.fours,
+          sixes : 0,//JSON.parse(localStorage.getItem('data')).striker.sixes
         },
         non_striker : {
-          runs : JSON.parse(localStorage.getItem('data')).non_striker.runs,
-          balls : JSON.parse(localStorage.getItem('data')).non_striker.balls,
-          strike_rate : JSON.parse(localStorage.getItem('data')).non_striker.strike_rate,
-          fours : JSON.parse(localStorage.getItem('data')).non_striker.fours,
-          sixes : JSON.parse(localStorage.getItem('data')).non_striker.sixes
+          runs : 0,//JSON.parse(localStorage.getItem('data')).non_striker.runs,
+          balls : 0,//JSON.parse(localStorage.getItem('data')).non_striker.balls,
+          strike_rate : 0,//JSON.parse(localStorage.getItem('data')).non_striker.strike_rate,
+          fours : 0,//JSON.parse(localStorage.getItem('data')).non_striker.fours,
+          sixes : 0,//JSON.parse(localStorage.getItem('data')).non_striker.sixes
         },
         bowler :{
-          balls : 0,//JSON.parse(localStorage.getItem('data')).bowler.balls,
-          maiden_count : JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
-          overs : JSON.parse(localStorage.getItem('data')).bowler.overs,
-          maidens : JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
-          runs : JSON.parse(localStorage.getItem('data')).bowler.runs,
-          wickets : JSON.parse(localStorage.getItem('data')).bowler.wickets
+          balls : 0,
+          maiden_count : 0,//JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
+          overs : 0,//JSON.parse(localStorage.getItem('data')).bowler.overs,
+          maidens : 0,//JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
+          runs : 0,//JSON.parse(localStorage.getItem('data')).bowler.runs,
+          wickets : 0,//JSON.parse(localStorage.getItem('data')).bowler.wickets
         },
     }
   
