@@ -640,7 +640,16 @@ increaseScoreBy5(){
         current_bowler: this.state.current_bowler,
       };
       console.log(bowler);
-      this.setState({ open_next_bowler_form: false });
+      this.setState({
+        bowler :{
+          balls : 0,
+          maiden_count : 0, 
+          overs : 0,
+          maidens : 0, 
+          runs : 0,
+          wickets : 0,
+        },
+         open_next_bowler_form: false });
     };
   
     openEndMatch = () => {
