@@ -86,9 +86,9 @@ class ScoringScreen extends React.Component {
   constructor(props){
     super(props)
     this.state =  {
-      striker_batsman: null,
-      non_striker_batsman: null,
-      current_bowler: null,
+      striker_batsman: null, //JSON.parse(localStorage.getItem('data')).striker_batsman,
+      non_striker_batsman: null, //JSON.parse(localStorage.getItem('data')).non_striker_batsman,
+      current_bowler: null, //JSON.parse(localStorage.getItem('data')).current_bowler,
       team2_players: PreMatchData.team2_playing_11,
       team1_players: PreMatchData.team1_playing_11,
         batting_team :  PreMatchData.team1,
@@ -108,7 +108,7 @@ class ScoringScreen extends React.Component {
         },
         non_striker : {
           runs : 0, //JSON.parse(localStorage.getItem('data')).non_striker.runs,
-          balls : 0, //JSON.parse(localStorage.getItem('data')).non_striker.balls,
+          balls :0, //JSON.parse(localStorage.getItem('data')).non_striker.balls,
           strike_rate : 0, //JSON.parse(localStorage.getItem('data')).non_striker.strike_rate,
           fours : 0, //JSON.parse(localStorage.getItem('data')).non_striker.fours,
           sixes : 0, //JSON.parse(localStorage.getItem('data')).non_striker.sixes
@@ -665,31 +665,31 @@ increaseScoreBy5(){
         bowling_team: old_batting_team,
         bowling_team_score: old_batting_team_score,
         bowling_team_wickets: old_batting_team_wickets,
-        batting_team_score : 0, //JSON.parse(localStorage.getItem('data')).batting_team_score,
-        batting_team_wickets : 0, //JSON.parse(localStorage.getItem('data')).batting_team_wickets,
-        total_overs : 0, //JSON.parse(localStorage.getItem('data')).total_overs,
+        batting_team_score : 0, 
+        batting_team_wickets : 0, 
+        total_overs : 0, 
         balls_per_over : 6,
         striker : {
-          runs : 0, //JSON.parse(localStorage.getItem('data')).striker.runs ,
-          balls : 0, //JSON.parse(localStorage.getItem('data')).striker.balls,
-          strike_rate : 0, //JSON.parse(localStorage.getItem('data')).striker.strike_rate,
-          fours : 0, //JSON.parse(localStorage.getItem('data')).striker.fours,
-          sixes : 0, //JSON.parse(localStorage.getItem('data')).striker.sixes
+          runs : 0,
+          balls : 0, 
+          strike_rate : 0, 
+          fours : 0,
+          sixes : 0,
         },
         non_striker : {
-          runs : 0, //JSON.parse(localStorage.getItem('data')).non_striker.runs,
-          balls : 0, //JSON.parse(localStorage.getItem('data')).non_striker.balls,
-          strike_rate : 0, //JSON.parse(localStorage.getItem('data')).non_striker.strike_rate,
-          fours : 0, //JSON.parse(localStorage.getItem('data')).non_striker.fours,
-          sixes : 0, //JSON.parse(localStorage.getItem('data')).non_striker.sixes
+          runs : 0, 
+          balls : 0,
+          strike_rate : 0, 
+          fours : 0,
+          sixes : 0,
         },
         bowler :{
           balls : 0,
-          maiden_count : 0, //JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
-          overs : 0, //JSON.parse(localStorage.getItem('data')).bowler.overs,
-          maidens : 0, //JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
-          runs : 0, //JSON.parse(localStorage.getItem('data')).bowler.runs,
-          wickets : 0, //JSON.parse(localStorage.getItem('data')).bowler.wickets
+          maiden_count : 0, 
+          overs : 0,
+          maidens : 0, 
+          runs : 0,
+          wickets : 0,
         },
         striker_batsman: null,
         non_striker_batsman: null,
@@ -1075,7 +1075,7 @@ increaseScoreBy5(){
                 variant="outlined"
                 label="Next Bowler"
                 value={this.state.weightRange}
-                onChange={this.handleChange("bowler")}
+                onChange={this.handleChange("current_bowler")}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">Bowler</InputAdornment>
