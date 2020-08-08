@@ -23,6 +23,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import classNames from "classnames";
 import PreMatchData from "../data/PreMatchData.json";
 
+import ScorecardDataService from '../service/ScorecardDataService';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -86,6 +87,7 @@ class ScoringScreen extends React.Component {
   constructor(props){
     super(props)
     this.state =  {
+      match_id: "18ac3505-a20f-48ca-a822-ba66f62ac46e",
       striker_batsman: null, //JSON.parse(localStorage.getItem('data')).striker_batsman,
       non_striker_batsman: null, //JSON.parse(localStorage.getItem('data')).non_striker_batsman,
       current_bowler: null, //JSON.parse(localStorage.getItem('data')).current_bowler,
@@ -171,6 +173,7 @@ class ScoringScreen extends React.Component {
     }
     this.openNextBatsmanForm();
   }
+  this.handleCreateBatsmanAfterBowled();
     this.openNextBatsmanForm();
   }
 
@@ -234,6 +237,7 @@ class ScoringScreen extends React.Component {
           }
         })
         this.openNextBowlerForm();
+        this.handleCreateAfterOver();
       }
       localStorage.setItem('data',JSON.stringify(this.state));
       localStorage.getItem('data')
@@ -275,6 +279,7 @@ class ScoringScreen extends React.Component {
           }
         })
         this.openNextBowlerForm();
+        this.handleCreateAfterOver();
       }
      
     localStorage.setItem('data',JSON.stringify(this.state));
@@ -346,6 +351,7 @@ class ScoringScreen extends React.Component {
           }
       })
       this.openNextBowlerForm();
+      this.handleCreateAfterOver();
     }
      localStorage.setItem('data',JSON.stringify(this.state));
      localStorage.getItem('data')
@@ -386,6 +392,7 @@ class ScoringScreen extends React.Component {
           }
         })
         this.openNextBowlerForm();
+        this.handleCreateAfterOver();
       }
      
       localStorage.setItem('data',JSON.stringify(this.state));
@@ -459,6 +466,7 @@ increaseScoreBy4(){
       }
     })
     this.openNextBowlerForm();
+    this.handleCreateAfterOver();
   }
    localStorage.setItem('data',JSON.stringify(this.state));
    localStorage.getItem('data')
@@ -499,6 +507,7 @@ increaseScoreBy5(){
           }
         })
         this.openNextBowlerForm();
+        this.handleCreateAfterOver();
       }
      
       localStorage.setItem('data',JSON.stringify(this.state));
@@ -571,6 +580,7 @@ increaseScoreBy5(){
           }
         })
         this.openNextBowlerForm();
+        this.handleCreateAfterOver();
       }
        localStorage.setItem('data',JSON.stringify(this.state));
        localStorage.getItem('data')
@@ -633,7 +643,15 @@ increaseScoreBy5(){
         striker_batsman: this.state.striker_batsman,
       };
       console.log(batsman);
-      this.setState({ open_next_batsman_form: false });
+      this.setState({ 
+        striker: {
+          runs: 0,
+          balls: 0,
+          strike_rate: 0,
+          fours: 0,
+          sixes: 0,
+        },
+        open_next_batsman_form: false });
       localStorage.setItem(
         "striker_batsman",
         JSON.stringify(this.state.striker_batsman)
@@ -718,6 +736,80 @@ increaseScoreBy5(){
       this.setState({ open_end_match_form: false });
       this.props.history.push("/scorer/MatchSelection");
     };
+
+    handleCreateAfterOver = () => {
+      var striker_batsman = {
+        match_id: this.state.match_id,
+        batsman_name: this.state.striker_batsman,
+        team_name: this.state.batting_team,
+        runs: this.state.striker.runs,
+        balls: this.state.striker.balls,
+        strike_rate: this.state.striker.strike_rate,
+        fours: this.state.striker.fours,
+        sixes: this.state.striker.sixes,
+      };
+  
+      var non_striker_batsman = {
+        match_id: this.state.match_id,
+        batsman_name: this.state.non_striker_batsman,
+        team_name: this.state.batting_team,
+        runs: this.state.non_striker.runs,
+        balls: this.state.non_striker.balls,
+        strike_rate: this.state.non_striker.strike_rate,
+        fours: this.state.non_striker.fours,
+        sixes: this.state.non_striker.sixes,
+      };
+  
+      var current_bowler = {
+        match_id: this.state.match_id,
+        bowler_name: this.state.current_bowler,
+        team_name: this.state.bowling_team,
+        overs: this.state.bowler.overs,
+        maiden_overs: this.state.bowler.maidens,
+        runs: this.state.bowler.runs,
+        wickets: this.state.bowler.wickets,
+      };
+      console.log(striker_batsman);
+      console.log(non_striker_batsman);
+      console.log(current_bowler);
+      ScorecardDataService.createBatsmanInAMatch(striker_batsman)
+      .then(
+        response => {
+            console.log(response);
+        });  
+        ScorecardDataService.createBatsmanInAMatch(non_striker_batsman)
+      .then(
+        response => {
+            console.log(response);
+        });  
+        ScorecardDataService.createBowlerInAMatch(current_bowler)
+      .then(
+        response => {
+            console.log(response);
+        });  
+    };
+  
+    handleCreateBatsmanAfterBowled = () => {
+      var striker_batsman = {
+        match_id: this.state.match_id,
+        batsman_name: this.state.striker_batsman,
+        team_name: this.state.batting_team,
+        runs: this.state.striker.runs,
+        balls: this.state.striker.balls,
+        strike_rate: this.state.striker.strike_rate,
+        fours: this.state.striker.fours,
+        sixes: this.state.striker.sixes,
+        out_by: this.state.current_bowler,
+      };
+      console.log(striker_batsman);
+      /* SeriesDataService.createSeries(series)
+         .then(
+           response => {
+               this.setState({open:false })
+               this.refreshSeries()
+           }
+       )     */
+          };
 
    render(){
     const { classes } = this.props;
