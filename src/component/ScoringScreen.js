@@ -1083,11 +1083,7 @@ increaseScoreBy5(){
               }}
             >
               <center>
-<<<<<<< HEAD
                 <h3>Select Next Bowler</h3>
-=======
-                <h3>Select Next Boler</h3>
->>>>>>> 360e38dfdd53e821febb71005b1933e560548309
               </center>
 
               <TextField
