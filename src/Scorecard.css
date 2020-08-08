@@ -42,6 +42,7 @@
 .match_time{
  float: right;
   margin-top: 10px;
+  margin-right: 20px;
 }
 .match_n_series{
   margin-left: 350px;

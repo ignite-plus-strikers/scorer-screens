@@ -242,17 +242,17 @@ this.state={
                      
                       <div className="match_header">
                         <div className="stadium">
-                          National Stadium, Karachi, Pakistan
+                          Sydney Cricket Ground, Sydney, Australia
                         </div>
 
                         <div className="match_time">
-                          22-08-2020 14:34:33<br/>
-                          12 July 2020 @ 13:30
+                          
+                          7 August 2020 @ 13:30
                         </div>
                         
                         <div className="match_n_series">
-                          <h2>Pakistan vs West Indies</h2>
-                          West Indies tour of Pakistan T20I series 2020
+                          <h2>India vs Australia</h2>
+                          India tour of Australia T20I series 2020
                         </div>
                         
                         
@@ -272,12 +272,12 @@ this.state={
                                 <Tabs  classes={{
                                         indicator: classes.indicator
                                     }}  variant="fullWidth" value={value} style={{fontSize:"20px"}}  onChange={this.handleChange}>
-                                  <Tab  classes={{ selected: classes.selected }} style={{fontSize:"20px"}} label="West Indies"  />
-                                  <Tab  classes={{ selected: classes.selected }} style={{fontSize:"20px"}} label="Pakistan" />
+                                  <Tab  classes={{ selected: classes.selected }} style={{fontSize:"20px"}} label="AUSTRALIA"  />
+                                  <Tab  classes={{ selected: classes.selected }} style={{fontSize:"20px"}} label="INDIA" />
                                 </Tabs>
                               </AppBar>
                              
-                              {value === 0 && <TabContainer><div className="current_score" ><h3>WI 112/2 (Overs 8.3)</h3></div>
+                              {value === 0 && <TabContainer><div className="current_score" ><h3>AUS 112/2 (Overs 8.3)</h3></div>
                                     <div className="table_div1">
                                   <ReactTable  
                                     columns={columns}  
@@ -295,7 +295,7 @@ this.state={
                                   /> 
                                     </div> 
                                     </TabContainer>}
-                                    {value === 1 && <TabContainer><div className="current_score"><h3>PAK 240/8 (Overs 20)</h3></div>
+                                    {value === 1 && <TabContainer><div className="current_score"><h3>IND 240/8 (Overs 20)</h3></div>
                                     <div className="table_div1">
                                   <ReactTable  
                                     columns={columns}  
@@ -316,7 +316,7 @@ this.state={
                       </div>
                     </div>
                     <div className="back">
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button variant="contained" color="primary" className={classes.button}  href="/scorer/ScoringScreen">
                       BACK
                     </Button>
                     </div>
