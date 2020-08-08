@@ -22,6 +22,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import classNames from "classnames";
 import PreMatchData from "../data/PreMatchData.json";
+import ScoringScreenDataService from '../service/ScoringScreenDataService'
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -86,19 +87,20 @@ class ScoringScreen extends React.Component {
   constructor(props){
     super(props)
     this.state =  {
-      striker_batsman: null, //JSON.parse(localStorage.getItem('data')).striker_batsman,
-      non_striker_batsman: null, //JSON.parse(localStorage.getItem('data')).non_striker_batsman,
-      current_bowler: null, //JSON.parse(localStorage.getItem('data')).current_bowler,
-      team2_players: PreMatchData.team2_playing_11,
-      team1_players: PreMatchData.team1_playing_11,
-        batting_team :  PreMatchData.team1,
-        bowling_team : PreMatchData.team2,
+        match_id : "18ac3505-a20f-48ca-a822-ba66f62ac46e",
+        striker_batsman: null, //JSON.parse(localStorage.getItem('data')).striker_batsman,
+        non_striker_batsman: null, //JSON.parse(localStorage.getItem('data')).non_striker_batsman,
+        current_bowler: null, //JSON.parse(localStorage.getItem('data')).current_bowler,
+        team2_players: [],
+        team1_players: [],
+        batting_team :  null,
+        bowling_team : null,
         bowling_team_score: 0, //JSON.parse(localStorage.getItem('data')).bowling_team_score,
         bowling_team_wickets: 0, //JSON.parse(localStorage.getItem('data')).bowling_team_wickets,
         batting_team_score : 0, //JSON.parse(localStorage.getItem('data')).batting_team_score,
         batting_team_wickets : 0, //JSON.parse(localStorage.getItem('data')).batting_team_wickets,
         total_overs : 0, //JSON.parse(localStorage.getItem('data')).total_overs,
-        balls_per_over : 6,
+        balls_per_over : 0,
         striker : {
           runs : 0, //JSON.parse(localStorage.getItem('data')).striker.runs ,
           balls : 0, //JSON.parse(localStorage.getItem('data')).striker.balls,
@@ -139,7 +141,28 @@ class ScoringScreen extends React.Component {
     this.handleMaiden = this.handleMaiden.bind(this);
     this.handleExtra = this.handleExtra.bind(this);
     this.handleWicket = this.handleWicket.bind(this);
+    this.getPreMatchData = this.getPreMatchData.bind(this);
   }
+
+  componentDidMount(){
+    this.getPreMatchData()
+  }
+
+  getPreMatchData() {
+    ScoringScreenDataService.getPreMatchData(this.state.match_id)
+        .then(
+            response => {
+                this.setState({
+                  batting_team : response.data.team1,
+                  bowling_team : response.data.team2,
+                  team1_players : response.data.team1_playing11,
+                  team2_players : response.data.team2_playing11 
+                 })
+               // this.refreshPlayers()
+            }
+        )
+
+}
 
   handleWicket(){
     this.setState({
@@ -169,7 +192,7 @@ class ScoringScreen extends React.Component {
         }
       })
     }
-    this.openNextBatsmanForm();
+    //this.openNextBatsmanForm();
   }
     this.openNextBatsmanForm();
   }

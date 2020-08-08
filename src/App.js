@@ -6,7 +6,7 @@ import MatchSelection from './component/MatchSelection'
 import PreMatch from './component/PreMatch'
 import Header from './component/Header'
 import ScoringScreen from './component/ScoringScreen'
-import NewScoringScreen from './component/NewScoringScreen'
+
 import Clock from './component/Clock'
 import {green,yellow,blue,pink} from "@material-ui/core/colors";
 import ScoreCard from './component/ScoreCard';
@@ -39,7 +39,7 @@ class App extends Component{
         <Header />
         <div style={{marginLeft:1350,marginTop:30}}><Clock /></div>
         <Router>
-        <Route exact path="/scorer/NewScoringScreen" component={NewScoringScreen} />
+      
           <Route exact path="/scorer/MatchSelection" component={MatchSelection} />
           <Route path="/scorer/PreMatch" component={PreMatch} />
           <Route path="/scorer/ScoringScreen" component={ScoringScreen} />
