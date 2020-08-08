@@ -11,8 +11,8 @@
         "umpires": ["Karan Verma", "Vishal Sharma", "Bill Vicars"],
         "referee": "Carl Hamsberg",
         "team1_playing_11": ["Virat Kohli", "Vishal Sharma", "Tahir Khan", "Abdul Hasan", "Harsh Pathak", "Akash Verma", "Karthik Indran", "Lakshman", "Sarthak Kumar", "Piyush Sharma", "Farhan Khan"],
-        "team2_playing_11": ["John Smith", "Bob Ross", "Robert Mckinsey", "Jasper Green", "Wallace Warland", "Akash Verma", "Karthik Indran", "Lakshman", "Sarthak Kumar", "Piyush Sharm", "Farhan Khan"],
+        "team2_playing_11": ["John Smith", "Bob Ross", "Robert Mckinsey", "Jasper Green", "Wallace Warland", "Stevan Jovetic", "Kevin Adams", "Ben Johnson", "Robin Gellar", "Josh Cullen", "Tobias Etan"],
         "team1_captain_wicketkeeper": {"Captain": "Virat Kohli", "Wicket Keeper": "Harsh Pathak"},
-        "team2_captain_wicketkeeper": {"Captain": "John Smith", "Wicket Keeper": "Akash Verma"}
+        "team2_captain_wicketkeeper": {"Captain": "John Smith", "Wicket Keeper": "Jasper Green"}
 
     }
