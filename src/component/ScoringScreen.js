@@ -727,11 +727,7 @@ increaseScoreBy5(){
         <Grid align = "center">
         <Typography align = "center">
         {this.state.batting_team} {this.state.batting_team_score}/
-<<<<<<< HEAD
             {this.state.batting_team_wickets} ({this.state.total_overs}.{this.state.balls_per_over} Overs) //{" "}
-=======
-            {this.state.batting_team_wickets} ({this.state.total_overs} Overs) //{" "}
->>>>>>> 360e38dfdd53e821febb71005b1933e560548309
             {this.state.bowling_team} {this.state.bowling_team_score}/
             {this.state.bowling_team_wickets}</Typography>
         <Button variant="contained" color="primary" className={classes.button} href="/scorer/Scorecard">Scorecard</Button>
