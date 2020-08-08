@@ -1,18 +1,18 @@
-{
-    "matchid": "18ac3505-a20f-48ca-a822-ba66f62ac46e",
-    "team1": "India",
-    "team2": "Australia",
-    "series_name": "Australia tour of India T20I 2020",
-    "venue": "Wankhde Stadium, Mumbai",
-    "match_date": "2020-08-15",
-    "match_time": "15:30:00",
-    "toss": "India",
-    "toss_decision": "Batting",
-    "umpires": ["Karan Verma", "Vishal Sharma", "Bill Vicars"],
-    "referee": "Carl Hamsberg",
-    "team1_playing_11": ["Virat Kohli", "Vishal Sharma", "Tahir Khan", "Abdul Hasan", "Harsh Pathak", "Akash Verma", "Karthik Indran", "Lakshman", "Sarthak Kumar", "Piyush Sharma", "Farhan Khan"],
-    "team2_playing_11": ["John Smith", "Bob Ross", "Robert Mckinsey", "Jasper Green", "Wallace Warland", "Akash Verma", "Karthik Indran", "Lakshman", "Sarthak Kumar", "Piyush Sharm", "Farhan Khan"],
-    "team1_captain_wicketkeeper": {"Captain": "Virat Kohli", "Wicket Keeper": "Harsh Pathak"},
-    "team2_captain_wicketkeeper": {"Captain": "John Smith", "Wicket Keeper": "Akash Verma"}
+  {
+        "matchid": "18ac3505-a20f-48ca-a822-ba66f62ac46e",
+        "team1": "India",
+        "team2": "Australia",
+        "series_name": "Australia tour of India T20I 2020",
+        "venue": "Wankhde Stadium, Mumbai",
+        "match_date": "2020-08-15",
+        "match_time": "15:30:00",
+        "toss": "India",
+        "toss_decision": "Batting",
+        "umpires": ["Karan Verma", "Vishal Sharma", "Bill Vicars"],
+        "referee": "Carl Hamsberg",
+        "team1_playing_11": ["Virat Kohli", "Vishal Sharma", "Tahir Khan", "Abdul Hasan", "Harsh Pathak", "Akash Verma", "Karthik Indran", "Lakshman", "Sarthak Kumar", "Piyush Sharma", "Farhan Khan"],
+        "team2_playing_11": ["John Smith", "Bob Ross", "Robert Mckinsey", "Jasper Green", "Wallace Warland", "Akash Verma", "Karthik Indran", "Lakshman", "Sarthak Kumar", "Piyush Sharm", "Farhan Khan"],
+        "team1_captain_wicketkeeper": {"Captain": "Virat Kohli", "Wicket Keeper": "Harsh Pathak"},
+        "team2_captain_wicketkeeper": {"Captain": "John Smith", "Wicket Keeper": "Akash Verma"}
 
-}
+    }

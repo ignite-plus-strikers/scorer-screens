@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const TEAM_API_URL = 'http://localhost:8081/cricket-tournament'
+const TEAM_API_URL = 'http://localhost:8080/cricket-tournament'
 
 
 class TeamDataService {
