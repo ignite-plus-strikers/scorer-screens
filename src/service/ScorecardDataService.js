@@ -56,6 +56,10 @@ class ScorecardDataService {
         retrieveAllBowlersInAMatch(matchid) {
             return axios.get(`${SCORECARD_API_URL}/bowler-by-match/${matchid}`);
         }
+
+        retrieveBowlerByName(matchid,bowlername) {
+            return axios.get(`${SCORECARD_API_URL}/bowler-by-match/${matchid}/${bowlername}`);
+        }
 }
 
 export default new ScorecardDataService()
