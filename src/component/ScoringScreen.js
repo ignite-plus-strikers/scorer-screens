@@ -870,7 +870,7 @@ increaseScoreBy5(){
          match_id : this.state.match_id,
          bowler_name : this.state.previous_bowler,
          team_name : this.state.bowling_team,
-         overs : this.state.p_bowler.overs +1,
+         overs : this.state.p_bowler.overs,
          maiden_overs : this.state.p_bowler.maidens,
          runs : this.state.p_bowler.runs,
          wickets : this.state.p_bowler.wickets
