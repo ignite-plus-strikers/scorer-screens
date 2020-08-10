@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 
-const SCORECARD_API_URL = 'http://localhost:8080/cricket-tournament'
-
+const SCORECARD_API_URL = 'http://localhost:8080/cricket-tournament';
+const PRE_MATCH_API_URL = 'http://localhost:8080/cricket-tournament'
 
 class ScorecardDataService {
 
@@ -28,6 +28,11 @@ class ScorecardDataService {
         deleteTeam(sCORECARDid,teamid){
             return axios.delete(`${SCORECARD_API_URL}/sCORECARD-teams/${sCORECARDid}/${teamid}`);
         } */
+
+
+        getPreMatchData(id) {
+            return axios.get(`${PRE_MATCH_API_URL}/pre-match/${id}`);
+        }
 
         createBatsmanInAMatch(batsman){
             return axios.post(`${SCORECARD_API_URL}/batsman-by-match`,batsman);

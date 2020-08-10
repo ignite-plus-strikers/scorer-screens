@@ -21,8 +21,8 @@ import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import classNames from "classnames";
-import PreMatchData from "../data/PreMatchData.json";
-import ScoringScreenDataService from '../service/ScoringScreenDataService'
+// import PreMatchData from "../data/PreMatchData.json";
+// import ScoringScreenDataService from '../service/ScoringScreenDataService'
 
 import ScorecardDataService from '../service/ScorecardDataService';
 
@@ -89,40 +89,50 @@ class ScoringScreen extends React.Component {
     super(props)
     this.state =  {
         match_id : "18ac3505-a20f-48ca-a822-ba66f62ac46e",
-        striker_batsman: null, //JSON.parse(localStorage.getItem('data')).striker_batsman,
-        non_striker_batsman: null, //JSON.parse(localStorage.getItem('data')).non_striker_batsman,
-        current_bowler: null, //JSON.parse(localStorage.getItem('data')).current_bowler,
+        striker_batsman: null,//JSON.parse(localStorage.getItem('data')).striker_batsman,
+        non_striker_batsman: null,//JSON.parse(localStorage.getItem('data')).non_striker_batsman,
+        current_bowler: null,//JSON.parse(localStorage.getItem('data')).current_bowler,
+        previous_bowler : null,
         team2_players: [],
         team1_players: [],
         batting_team :  null,
         bowling_team : null,
-        bowling_team_score: 0, //JSON.parse(localStorage.getItem('data')).bowling_team_score,
-        bowling_team_wickets: 0, //JSON.parse(localStorage.getItem('data')).bowling_team_wickets,
-        batting_team_score : 0, //JSON.parse(localStorage.getItem('data')).batting_team_score,
-        batting_team_wickets : 0, //JSON.parse(localStorage.getItem('data')).batting_team_wickets,
-        total_overs : 0, //JSON.parse(localStorage.getItem('data')).total_overs,
+        bowling_team_score: 0,//JSON.parse(localStorage.getItem('data')).bowling_team_score,
+        bowling_team_wickets: 0,// JSON.parse(localStorage.getItem('data')).bowling_team_wickets,
+        batting_team_score : 0,//JSON.parse(localStorage.getItem('data')).batting_team_score,
+        batting_team_wickets : 0,//JSON.parse(localStorage.getItem('data')).batting_team_wickets,
+        total_overs : 0,//JSON.parse(localStorage.getItem('data')).total_overs,
         balls_per_over : 0,
         striker : {
-          runs : 0, //JSON.parse(localStorage.getItem('data')).striker.runs ,
-          balls : 0, //JSON.parse(localStorage.getItem('data')).striker.balls,
-          strike_rate : 0, //JSON.parse(localStorage.getItem('data')).striker.strike_rate,
-          fours : 0, //JSON.parse(localStorage.getItem('data')).striker.fours,
-          sixes : 0, //JSON.parse(localStorage.getItem('data')).striker.sixes
+          out_by : null,
+          runs : 0,//JSON.parse(localStorage.getItem('data')).striker.runs ,
+          balls : 0,//JSON.parse(localStorage.getItem('data')).striker.balls,
+          strike_rate : 0,//JSON.parse(localStorage.getItem('data')).striker.strike_rate,
+          fours : 0,//JSON.parse(localStorage.getItem('data')).striker.fours,
+          sixes : 0,//JSON.parse(localStorage.getItem('data')).striker.sixes
         },
         non_striker : {
-          runs : 0, //JSON.parse(localStorage.getItem('data')).non_striker.runs,
-          balls :0, //JSON.parse(localStorage.getItem('data')).non_striker.balls,
-          strike_rate : 0, //JSON.parse(localStorage.getItem('data')).non_striker.strike_rate,
-          fours : 0, //JSON.parse(localStorage.getItem('data')).non_striker.fours,
-          sixes : 0, //JSON.parse(localStorage.getItem('data')).non_striker.sixes
+          runs : 0,//JSON.parse(localStorage.getItem('data')).non_striker.runs,
+          balls : 0,//JSON.parse(localStorage.getItem('data')).non_striker.balls,
+          strike_rate : 0,//JSON.parse(localStorage.getItem('data')).non_striker.strike_rate,
+          fours : 0,//JSON.parse(localStorage.getItem('data')).non_striker.fours,
+          sixes : 0,//JSON.parse(localStorage.getItem('data')).non_striker.sixes
         },
         bowler :{
           balls : 0,
-          maiden_count : 0, //JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
-          overs : 0, //JSON.parse(localStorage.getItem('data')).bowler.overs,
-          maidens : 0, //JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
-          runs : 0, //JSON.parse(localStorage.getItem('data')).bowler.runs,
-          wickets : 0, //JSON.parse(localStorage.getItem('data')).bowler.wickets
+          maiden_count : 0,//JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
+          overs : 0,//JSON.parse(localStorage.getItem('data')).bowler.overs,
+          maidens : 0,//JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
+          runs : 0,//JSON.parse(localStorage.getItem('data')).bowler.runs,
+          wickets : 0,//JSON.parse(localStorage.getItem('data')).bowler.wickets
+        },
+        p_bowler :{
+          balls : 0,
+          maiden_count : 0,//JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
+          overs : 0,//JSON.parse(localStorage.getItem('data')).bowler.overs,
+          maidens : 0,//JSON.parse(localStorage.getItem('data')).bowler.maiden_count,
+          runs : 0,//JSON.parse(localStorage.getItem('data')).bowler.runs,
+          wickets : 0,//JSON.parse(localStorage.getItem('data')).bowler.wickets
         },
         open_initial_form: false,
         open_next_batsman_form: false,
@@ -146,20 +156,27 @@ class ScoringScreen extends React.Component {
   }
 
   componentDidMount(){
-    this.getPreMatchData()
+    this.getPreMatchData();
+    // localStorage.setItem('data',JSON.stringify(this.state))
+    // this.setState({
+    //   striker_batsman: JSON.parse(localStorage.getItem('data')).striker_batsman,
+    //   non_striker_batsman: JSON.parse(localStorage.getItem('data')).non_striker_batsman,
+    //   current_bowler: JSON.parse(localStorage.getItem('data')).current_bowler,
+    // })
+    // localStorage.setItem('data',JSON.stringify(this.state))
   }
 
   getPreMatchData() {
-    ScoringScreenDataService.getPreMatchData(this.state.match_id)
+    ScorecardDataService.getPreMatchData(this.state.match_id)
         .then(
             response => {
                 this.setState({
                   batting_team : response.data.team1,
                   bowling_team : response.data.team2,
                   team1_players : response.data.team1_playing11,
-                  team2_players : response.data.team2_playing11 
+                  team2_players : response.data.team2_playing11,
+                 // batting_team_score : JSON.parse(localStorage.getItem('data')).batting_team_score,
                  })
-               // this.refreshPlayers()
             }
         )
 
@@ -169,6 +186,14 @@ class ScoringScreen extends React.Component {
     this.setState({
       batting_team_wickets : this.state.batting_team_wickets +1,
       balls_per_over : this.state.balls_per_over,
+      striker:{
+        runs : this.state.striker.runs ,
+          fours : this.state.striker.fours,
+          sixes : this.state.striker.sixes,
+          balls : this.state.striker.balls +1,
+          strike_rate : ((this.state.striker.runs * 100)/(this.state.striker.balls)).toFixed(2),
+        out_by : this.state.current_bowler,
+      },
       bowler : {
         wickets : this.state.bowler.wickets +1,
         runs : this.state.bowler.runs,
@@ -196,7 +221,7 @@ class ScoringScreen extends React.Component {
     //this.openNextBatsmanForm();
   }
   this.handleCreateBatsmanAfterBowled();
-    this.openNextBatsmanForm();
+  this.openNextBatsmanForm();
   }
 
   handleMaiden(){
@@ -215,15 +240,28 @@ class ScoringScreen extends React.Component {
         })
       }
     }
+    if(this.state.balls_per_over >= 0){
+      this.handleCreateAfterOver();
+    }
     localStorage.setItem('data',JSON.stringify(this.state))
   }
 
   handleExtra(){
     this.setState({
-      balls_per_over : this.state.balls_per_over 
+      balls_per_over : this.state.balls_per_over +1,
+      bowler : {
+        maiden_count : this.state.bowler.maiden_count,
+        maidens : this.state.bowler.maidens,
+        runs : this.state.bowler.runs,
+        overs : this.state.bowler.overs,
+        wickets : this.state.bowler.wickets,
+        balls : this.state.bowler.balls +1,
+      }
     });
+    if(this.state.balls_per_over >= 0){
+      this.handleCreateAfterOver();
+    }
     localStorage.setItem('data',JSON.stringify(this.state))
-    return this.handleScore;
   }
 
   increaseScoreBy0(){
@@ -259,6 +297,9 @@ class ScoringScreen extends React.Component {
           }
         })
         this.openNextBowlerForm();
+        //this.handleCreateAfterOver();
+      }
+      if(this.state.balls_per_over >= 0){
         this.handleCreateAfterOver();
       }
       localStorage.setItem('data',JSON.stringify(this.state));
@@ -336,6 +377,9 @@ class ScoringScreen extends React.Component {
        strike_rate : ((old_striker_runs*100)/(old_striker_balls)).toFixed(2)
       }
     })
+    if(this.state.balls_per_over >= 0){
+      this.handleCreateAfterOver();
+    }
     localStorage.setItem('data',JSON.stringify(this.state));    
     }
 
@@ -373,6 +417,9 @@ class ScoringScreen extends React.Component {
           }
       })
       this.openNextBowlerForm();
+      this.handleCreateAfterOver();
+    }
+    if(this.state.balls_per_over >= 0){
       this.handleCreateAfterOver();
     }
      localStorage.setItem('data',JSON.stringify(this.state));
@@ -413,6 +460,9 @@ class ScoringScreen extends React.Component {
              maiden_count : 0
           }
         })
+        if(this.state.balls_per_over >= 0){
+          this.handleCreateAfterOver();
+        }
         this.openNextBowlerForm();
         this.handleCreateAfterOver();
       }
@@ -449,6 +499,9 @@ class ScoringScreen extends React.Component {
        strike_rate : ((old_non_striker_runs*100)/(old_non_striker_balls)).toFixed(2)
       }
     })
+    if(this.state.balls_per_over >= 0){
+      this.handleCreateAfterOver();
+    }
     localStorage.setItem('data',JSON.stringify(this.state));    
     }
 
@@ -488,6 +541,9 @@ increaseScoreBy4(){
       }
     })
     this.openNextBowlerForm();
+    this.handleCreateAfterOver();
+  }
+  if(this.state.balls_per_over >= 0){
     this.handleCreateAfterOver();
   }
    localStorage.setItem('data',JSON.stringify(this.state));
@@ -564,6 +620,9 @@ increaseScoreBy5(){
        strike_rate : ((old_non_striker_runs*100)/(old_non_striker_balls)).toFixed(2)
       }
     })
+    if(this.state.balls_per_over >= 0){
+      this.handleCreateAfterOver();
+    }
     localStorage.setItem('data',JSON.stringify(this.state));    
     }
 
@@ -602,6 +661,9 @@ increaseScoreBy5(){
           }
         })
         this.openNextBowlerForm();
+        this.handleCreateAfterOver();
+      }
+      if(this.state.balls_per_over >= 0){
         this.handleCreateAfterOver();
       }
        localStorage.setItem('data',JSON.stringify(this.state));
@@ -681,10 +743,22 @@ increaseScoreBy5(){
     };
   
     handleNextBowlerSubmit = () => {
+      alert(this.state.current_bowler)
       var bowler = {
         current_bowler: this.state.current_bowler,
       };
-      console.log(bowler);
+      
+      this.setState({
+        previous_bowler : this.state.current_bowler, 
+        p_bowler :{
+          balls : this.state.bowler.balls,
+          overs : this.state.bowler.overs,
+          maidens : this.state.bowler.maidens, 
+          runs : this.state.bowler.runs,
+          wickets : this.state.bowler.wickets,
+        },
+      })
+      
       this.setState({
         bowler :{
           balls : 0,
@@ -748,6 +822,7 @@ increaseScoreBy5(){
         striker_batsman: null,
         non_striker_batsman: null,
         current_bowler: null,
+        previous_bowler : null,
         team2_players: old_team1_players,
         team1_players: this.state.team2_players,
         disabled: false
@@ -791,6 +866,15 @@ increaseScoreBy5(){
         runs: this.state.bowler.runs,
         wickets: this.state.bowler.wickets,
       };
+       var previous_bowler = {
+         match_id : this.state.match_id,
+         bowler_name : this.state.previous_bowler,
+         team_name : this.state.bowling_team,
+         overs : this.state.p_bowler.overs +1,
+         maiden_overs : this.state.p_bowler.maidens,
+         runs : this.state.p_bowler.runs,
+         wickets : this.state.p_bowler.wickets
+       }
       console.log(striker_batsman);
       console.log(non_striker_batsman);
       console.log(current_bowler);
@@ -808,7 +892,14 @@ increaseScoreBy5(){
       .then(
         response => {
             console.log(response);
-        });  
+        }); 
+        if(previous_bowler) {
+          ScorecardDataService.createBowlerInAMatch(previous_bowler)
+          .then(
+            response => {
+                console.log(response);
+            }); 
+        }
     };
   
     handleCreateBatsmanAfterBowled = () => {
@@ -824,13 +915,6 @@ increaseScoreBy5(){
         out_by: this.state.current_bowler,
       };
       console.log(striker_batsman);
-      /* SeriesDataService.createSeries(series)
-         .then(
-           response => {
-               this.setState({open:false })
-               this.refreshSeries()
-           }
-       )     */
           };
 
    render(){
