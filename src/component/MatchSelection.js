@@ -10,6 +10,8 @@ import { Divider, Container } from '@material-ui/core';
 //import MatchSelectionService from "../service/MatchSelectionService"
 import Clock from './Clock';
 import axios from 'axios'
+import moment from 'moment';
+import Pagination from '@material-ui/lab/Pagination';
 
 
 const useStyles = theme => ({
@@ -18,6 +20,9 @@ const useStyles = theme => ({
     height:'auto',
     marginLeft:100,
     marginTop:20,
+    '& > *': {
+      marginTop: theme.spacing(2),
+    },
   },
   title: {
     fontSize: 14,
@@ -33,14 +38,21 @@ const useStyles = theme => ({
 
 });
 
-class MatchSelection extends React.Component{
 
+var date = new Date();
+var todayDate = moment(date).format('YYYY-MM-DD')
+
+var time = moment(date).format('hh:mm:ss')
+
+
+class MatchSelection extends React.Component{
     constructor(props){
       super(props);
       this.state={
         fixtures:[]
       };
     }
+   
 
     componentDidMount(){
       axios.get("http://localhost:8080/cricket-tournament/fixtures")
@@ -54,14 +66,18 @@ class MatchSelection extends React.Component{
     const {classes} = this.props;
     return (
       <Container>
-        
+       
         <Typography variant="h5" color="primary" align="center" style={{marginTop:20}}>Welcome Scorer! Happy Scoring! </Typography>
-        <Typography variant="h5" align="left" style={{marginTop:20,marginLeft:80}} >Live Matches</Typography>
+    <Typography variant="h5" align="left" style={{marginTop:20,marginLeft:80}} >Live Match {time}</Typography> 
+        {this.state.fixtures.map((fixture) => {if (moment(todayDate).isSame(fixture.fixture_date) && time>fixture.fixture_start_time && time<fixture.fixture_end_time) 
+        {
+        return(
+          //alert(time,fixture.fixture_time);
               <Card className = {classes.root} variant="outlined">
               <CardContent>
-              <Typography variant="h5" color="primary" align="center">Pakistan vs West Indies</Typography>
+              <Typography variant="h5" color="primary" align="center">{fixture.team1} vs {fixture.team2}</Typography>
               <Divider />
-              <Typography variant="body1" align="center" color="textSecondary">2ns T20 at Kensington Oval,Barbados scheduled on 06-08-2020 05:00:00 pm</Typography>
+        <Typography variant="body1" align="center" color="textSecondary">{fixture.description} at {fixture.venue} scheduled on {fixture.fixture_date} {fixture.fixture_start_time}</Typography>
               </CardContent>
             <Divider />
             <CardActions>
@@ -69,18 +85,28 @@ class MatchSelection extends React.Component{
               <Button variant="contained" color="primary" href="/scorer/ScoringScreen">Scoring Screen</Button>
             </CardActions>
             </Card>
-         
-        <Typography variant="h5" align="left" style={{marginTop:20,marginLeft:80}} >Upcoming Matches</Typography>
-        
+          );
+        }
+        {/*else{
+          return(
+            <Typography variant="h6">No live matches</Typography>
+          );
+        }*/}
+  })}
+      
+  
+        <Typography variant="h5" align="left" style={{marginTop:20,marginLeft:80}} >Upcoming Matches</Typography> 
+        {this.state.fixtures.map((fixture) => {if (moment(todayDate).isSame(fixture.fixture_date) && time<fixture.fixture_start_time) 
+        {
+        return(
         
         <Grid container spacing={6} direction="row" justify="flex-start" alignItems="flex-start">
           <Grid item >
-          {this.state.fixtures.map((fixture) => (
             <Card className={classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
               <Divider />
-              <Typography variant="body1" align="center" color="textSecondary">{fixture.description} at {fixture.venue} scheduled on {fixture.fixture_date} {fixture.fixture_time}</Typography>
+              <Typography variant="body1" align="center" color="textSecondary">{fixture.description} at {fixture.venue} scheduled on {fixture.fixture_date} {fixture.fixture_start_time}</Typography>
               </CardContent>
             <Divider />
             <CardActions>
@@ -88,14 +114,49 @@ class MatchSelection extends React.Component{
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen"disabled>Scoring Screen</Button>
             </CardActions>
             </Card>
-           ))}
           </Grid>
           </Grid>
-        </Container>
-       
+        );
+      }
+      {/*else{
+            return(
+              <Container>
+                <p>No upcoming matches</p></Container>
+            );
+          }*/} 
+        }
+      )
+    }
+     {this.state.fixtures.map((fixture) => {if (moment(todayDate).isBefore(fixture.fixture_date)) 
+        {
+        return(
         
-    );
+        <Grid container spacing={6} direction="row" justify="flex-start" alignItems="flex-start">
+          <Grid item >
+            <Card className={classes.root} variant="outlined">
+              <CardContent>
+              <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
+              <Divider />
+              <Typography variant="body1" align="center" color="textSecondary">{fixture.description} at {fixture.venue} scheduled on {fixture.fixture_date} {fixture.fixture_start_time}</Typography>
+              </CardContent>
+            <Divider />
+            <CardActions>
+              <Button variant="contained" color="primary" href="/scorer/MatchSelection/prematch" disabled>Pre-match Screen</Button>
+              <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen"disabled>Scoring Screen</Button>
+            </CardActions>
+            </Card>
+          </Grid>
+          <Pagination style={{marginLeft:400, marginTop:10}} count={10} />
+          </Grid>
+        );
+      }
+     }
+    )
   }
+    
+    </Container> 
+  );
+}
 }
 
 
