@@ -6,27 +6,6 @@ const PRE_MATCH_API_URL = 'http://localhost:8080/cricket-tournament'
 
 class ScorecardDataService {
 
-   /*  retrieveAllSCORECARD() {
-        return axios.get(`${SCORECARD_API_URL}/sCORECARD`);
-    }
-    deleteSCORECARD(id) {
-        return axios.delete(`${SCORECARD_API_URL}/sCORECARD/${id}`);
-    }
-    retrieveSCORECARD(id) {
-        return axios.get(`${SCORECARD_API_URL}/sCORECARD/${id}`);
-    }
-    
-        updateSCORECARD(id,sCORECARD) {
-            return axios.put(`${SCORECARD_API_URL}/sCORECARD/${id}`, sCORECARD);
-        }
-      
-        createSCORECARD(sCORECARD) {
-            return axios.post(`${SCORECARD_API_URL}/sCORECARD`,sCORECARD);    
-        }
-        
-        deleteTeam(sCORECARDid,teamid){
-            return axios.delete(`${SCORECARD_API_URL}/sCORECARD-teams/${sCORECARDid}/${teamid}`);
-        } */
         retrieveBatsmen(id) {
             return axios.get(`${SCORECARD_API_URL}/batsman-by-match/${id}`);
         }
@@ -63,6 +42,18 @@ class ScorecardDataService {
 
         retrieveBowlerByName(matchid,bowlername) {
             return axios.get(`${SCORECARD_API_URL}/bowler-by-match/${matchid}/${bowlername}`);
+        }
+
+	 createMatchResult(matchresult){
+            return axios.post(`${SCORECARD_API_URL}/match-result`,matchresult);
+        }
+
+        updateMatchResult(matchid,matchresult) {
+            return axios.put(`${SCORECARD_API_URL}/match-result/${matchid}`, matchresult);
+        }
+
+	retrieveMatchResult(matchid) {
+            return axios.get(`${SCORECARD_API_URL}/match-result/${matchid}`);
         }
 }
 
