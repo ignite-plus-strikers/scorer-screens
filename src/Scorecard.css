@@ -18,7 +18,7 @@
 .table_div2{
     
     float:left;
-  margin-left: 72px;
+  margin-left: 122px;
 
 }
 .header_img{
@@ -36,17 +36,17 @@
 }
 .stadium{
     float: left;
-    margin-top: 15px;
-    margin-left: 20px;
+    width:33%;
+   
 }
 .match_time{
- float: right;
-  margin-top: 10px;
-  margin-right: 20px;
+ float: left;
+ width:32%;
+ text-align: right;
+ margin-right: 15px;
 }
 .match_n_series{
-  margin-left: 350px;
-  margin-right: 400px;
+  width:33%;
    float: left;
    text-align: center;
    

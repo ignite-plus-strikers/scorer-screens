@@ -1,4 +1,5 @@
 import React from "react";
+import '../Scorecard.css';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -19,6 +20,15 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import RefereeDataService from '../service/RefereeDataService';
 import TeamDataService from '../service/TeamDataService';
 import UmpireDataService from '../service/UmpireDataService';
+import PreMatchDataService from '../service/PreMatchDataService';
+import RadioGroup from '@material-ui/core/RadioGroup';
+
+import FixtureDataService from '../service/FixtureDataService';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
 
 
 
@@ -96,47 +106,27 @@ const umpire3 = [
 ];
 */
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
+
+
 class OutlinedInputAdornments extends React.Component {
   constructor(props) {
     super(props)
   this.state = {
     map: new Map(),
       player: "",
+      fixture_id:this.props.match.params.id,
     selectedValue: 'a',
     selectedValue: 'b',
     toss: "",
-    checkedA: false,
-    checkedB: false,
-    checkedC: false,
-    checkedD: false,
-    checkedE: false,
-    checkedF: false,
-    checkedG: false,
-    checkedH: false,
-    checkedI: false,
-    checkedJ: false,
-    checkedK: false,
-    checkedL: false,
-    checkedM: false,
-    checkedN: false,
-    checkedO: false,
+   
     list:[],
     
     app: new Map(),
     team:[],
-    checked1: false,
-    checked2: false,
-    checked3: false,
-    checked4: false,
-    checked5: false,
-    checked6: false,
-    checked7: false,
-    checked8: false,
-    checked9: false,
-    checked10: false,
-    checked11: false,
-    checked12: false,
-    checked13: false,
+    
 
     umpires: [],
     first_name: "",
@@ -155,21 +145,95 @@ class OutlinedInputAdornments extends React.Component {
     wicket1: "",
     captain2: "",
     wicket2: "",
+    teamplayers1:[],
+    teamplayers2:[],
+    team1:"",
+    team2:"",
+    series_name:"",
+    fixture_date:"",
+    fixture_time:"",
+    venue:"",
+    teams:[],
+    team1_id:"",
+    team2_id:"",
+    toss_decision:"",
+    umpire1:"",
+    umpire2:"",
+    umpire3:"",
+    referee:"",
+    tps1:[],
+    tps2:[],
+    umpire_names:[],
+    referee_names:[],
+    player_cat1:new Map(),
+    player_cat2:new Map(),
+    open1:false,
+    open2:false,
+    open3:false,
+    open4:false,
+    open5:false
+    
   };
   this.refreshReferees = this.refreshReferees.bind(this)
   this.refreshUmpires = this.refreshUmpires.bind(this)
-  this.refreshTeamPlayers = this.refreshTeamPlayers.bind(this)
+this.onSubmit=this.onSubmit.bind(this)
+this.finalSubmit=this.finalSubmit.bind(this)
+  this.getFixturedetails=this.getFixturedetails.bind(this)
 
   }
   getChckeboxValue(event) {
     const value = event.target.value;
 }
-handleChange = (prop,name)=> event => {
+
+getTeamID1(){
+  TeamDataService.retrieveAllTeams()
+  .then(
+      response => {
+          console.log(response);
+          this.setState({ teams : response.data })
+      }
+  )
+  
+}
+handleElement=event=>{
+  this.setState({[event.target.name]:event.target.value})
+  console.log(this.state.umpire1+this.state.umpire2+this.state.umpire3+this.state.referee)
+}
+onSelectChange1 = (event,values) => {
+  this.setState({
+    umpire1 : values
+  
+  });
+ 
+}
+onSelectChange2 = (event,values) => {
+  this.setState({
+    umpire2 : values
+  
+  });
+ 
+}
+onSelectChange3 = (event,values) => {
+  this.setState({
+    umpire3 : values
+  
+  });
+  
+   
+  }
+  onSelectChange4 = (event,values) => {
+    this.setState({
+      referee : values
+    
+    });
+}
+
+
+handleChange = (prop,name,category)=> event => {
  console.log(this.state.map)
   this.state.map.set(name,event.target.checked )
-
- this.setState({ [prop]: event.target.checked});
-
+  this.state.player_cat1.set(name,category )
+ 
  var play=this.state.map.keys()
 
  var tempLList= ""
@@ -177,20 +241,19 @@ handleChange = (prop,name)=> event => {
  {
    if(this.state.map.get(ele))
    {
-   // tempLList.push(ele)
+   //this.state.tps1.push(ele)
    tempLList=tempLList+ele+"\n\n"
-   
+  
    }
  }
 
  this.setState({player:tempLList})
 }
  
-handleChange1 = (prop,name)=> event => {
+handleChange1 = (prop,name,category)=> event => {
   console.log(this.state.app)
    this.state.app.set(name,event.target.checked )
- 
-  this.setState({ [prop]: event.target.checked});
+   this.state.player_cat2.set(name,category )
  
   var play=this.state.app.keys()
  
@@ -199,7 +262,7 @@ handleChange1 = (prop,name)=> event => {
   {
     if(this.state.app.get(ele))
     {
-    // tempLList.push(ele)
+      //this.state.tps2.push(ele)
     tempLList=tempLList+ele+"\n\n"
     
     }
@@ -207,6 +270,10 @@ handleChange1 = (prop,name)=> event => {
  
   this.setState({team:tempLList})
  }
+
+ handleClose = () => {
+  this.setState({ open1: false,open2:false,open3:false,open4:false,open5:false });
+};
  
  /* handleChange = prop => event => {
     var isChecked = event.target.checked;
@@ -228,29 +295,70 @@ handleChange1 = (prop,name)=> event => {
     //this.setState({ selectedValue: event.target.value });
     
   }; */
-  handleSubmit = () => {};
- /* function getValue() {
-    var checks = document.getElementsByClassName('checks');
-    var str = '';
-    for(i=0;i<11;i++) {
-      if(checks[i].checkedA === true) {
-        str += checks[i].value+ "";
-      }
-    }
-    alert(str);
-  } */
+ 
+handleCaptainWicket = name=>event=>{
+  this.setState({ [name]: event.target.value });
+}
+
+
 
   componentDidMount() { 
+    this.getFixturedetails();
     this.refreshReferees();
     this.refreshUmpires();
-    this.refreshTeamPlayers();
+    
+    
   }
+
+  getFixturedetails(){
+    FixtureDataService.retrieveFixture(this.state.fixture_id)
+    .then(response => this.setState({
+        team1: response.data.team1,
+        team2:response.data.team2,
+        team1_id:response.data.team1_id,
+        team2_id:response.data.team2_id,
+        series_name:response.data.series_name,
+        fixture_date:response.data.fixture_date,
+        fixture_time:response.data.fixture_time,
+        venue:response.data.venue 
+        
+    },()=>{ TeamDataService.retrieveAllTeamPlayers(this.state.team1_id)
+      .then(
+          response => {
+              
+              this.setState({ teamplayers1: response.data })
+              console.log(this.state.teamplayers1)
+            }
+  
+      );
+      TeamDataService.retrieveAllTeamPlayers(this.state.team2_id)
+      .then(
+          response => {
+              
+              this.setState({ teamplayers2: response.data })
+              console.log(this.state.teamplayers2)
+            }
+  
+      )})
+    
+    )
+    
+
+  }
+
+  
+  
+  
   refreshReferees() {
     RefereeDataService.retrieveAllReferees()
         .then(
             response => {
                 console.log(response);
-                this.setState({ referees: response.data })
+                this.setState({ referees: response.data },()=>{
+                  this.state.referees.map(u=>{
+                    this.state.referee_names.push(u.first_name+" "+u.middle_name+" "+u.last_name)
+                  })
+                });
             }
         )
   }
@@ -259,23 +367,108 @@ handleChange1 = (prop,name)=> event => {
         .then(
             response => {
                 console.log(response);
-                this.setState({ umpires: response.data })
+                this.setState({ umpires: response.data },()=>{
+                  this.state.umpires.map(u=>{
+                    this.state.umpire_names.push(u.first_name+" "+u.middle_name+" "+u.last_name)
+                  })
+                });
             }
         )
 }
-refreshTeamPlayers() {
-  
-  TeamDataService.retrieveAllTeamPlayers(this.state.teamid)
-      .then(
-          response => {
-              
-              this.setState({ teamplayers: response.data })
-              console.log(this.state.teamplayers)
-            }
 
-      )
+onSubmit(){
+
+ var t1B1=0
+ var t1B2=0
+ var t1B3=0
+ var t2B1=0
+ var t2B2=0
+ var t2B3=0
+  var play=this.state.map.keys()
+  for(var ele of play) 
+  {
+    if(this.state.map.get(ele))
+    {
+    this.state.tps1.push(ele)
+    if(this.state.player_cat1.get(ele)==='B1')
+      t1B1=t1B1+1;
+    else if(this.state.player_cat1.get(ele)==='B2') 
+     t1B2=t1B2+1;
+    else if(this.state.player_cat1.get(ele)==='B3')
+      t1B3=t1B3+1;
+
+    }
+  }
+
+  
+  var play2=this.state.app.keys()
+  for(var ele of play2) 
+  {
+    if(this.state.app.get(ele))
+    {
+      this.state.tps2.push(ele)
+      if(this.state.player_cat2.get(ele)==='B1')
+      t2B1=t2B1+1;
+    else if(this.state.player_cat2.get(ele)==='B2') 
+     t2B2=t2B2+1;
+    else if(this.state.player_cat2.get(ele)==='B3')
+      t2B3=t2B3+1;
+
+  
+    }
+  }
+  if(t1B1!=4)
+  this.setState({open1:true})
+  else if((t1B2+t1B3)!==7 || (t1B2<3) ||(t1B2>4))
+  this.setState({open2:true})
+  else if(t2B1!=4)
+  this.setState({open3:true})
+  else if((t2B2+t2B3)!==7 || (t2B2<3) ||(t2B2>4))
+  this.setState({open4:true})
+  else
+  this.setState({open5:true})
+
+
+
 }
 
+finalSubmit(){
+  this.setState({open5:false})
+
+  var umpires=[this.state.umpire1,this.state.umpire2,this.state.umpire3];
+  var team1_captain_wicket_keeper={
+    captain:this.state.captain1 ,
+    wicket_keeper:this.state.wicket1
+  };
+  var team2_captain_wicket_keeper={
+    captain:this.state.captain2 ,
+    wicket_keeper:this.state.wicket2
+  };
+
+
+var fixture = {
+  match_id:this.state.fixture_id,
+ team1:this.state.team1,
+ team2:this.state.team2,
+ series_name:this.state.series_name,
+ match_date:this.state.fixture_date,
+ match_time:this.state.fixture_time,
+ venue:this.state.venue,
+ toss:this.state.toss,
+ toss_decision:this.state.toss_decision,
+umpires:umpires,
+referee:this.state.referee,
+team1_playing11:this.state.tps1,
+team2_playing11:this.state.tps2,
+team1_captain_wicket_keeper:team1_captain_wicket_keeper,
+team2_captain_wicket_keeper:team2_captain_wicket_keeper 
+}
+
+console.log(fixture);
+let fixtureid=this.state.fixture_id
+  PreMatchDataService.createPreMatch(fixtureid,fixture)
+      .then(() => this.props.history.push(`/scorer/ScoringScreen/${fixtureid}`))
+}
 
   render() {
     const { classes } = this.props;
@@ -283,10 +476,35 @@ refreshTeamPlayers() {
     const { checkedA, checkedB,checkedC,checkedD,checkedE,checkedF,checkedG,checkedH,checkedI,checkedJ,checkedK,checkedL,checkedM,checkedN,checkedO} = this.state;
     const { checked1, checked2,checked3,checked4,checked5,checked6,checked7,checked8,checked9,checked10,checked11,checked12,checked13} = this.state;
     const error = [checkedA, checkedB,checkedC,checkedD,checkedE,checkedF,checkedG,checkedH,checkedI,checkedJ,checkedK,checkedL,checkedM,checkedN,checkedO,checked1, checked2,checked3,checked4,checked5,checked6,checked7,checked8,checked9,checked10,checked11,checked12,checked13].filter(v => v).length !== 22;
-    
-    
+    var team1_id
+    var team2_id
     return (
-      <div className={classes.root}> 
+      <div> 
+
+
+
+
+                     
+                     <div className="match_header">
+                       <div className="stadium">
+                        {this.state.venue} 
+                       </div>
+
+                       <div className="match_n_series">
+                         <h2>{this.state.team1} Vs {this.state.team2}</h2>
+                        {this.state.series_name}
+                       </div>
+
+                       <div className="match_time">
+                         {this.state.fixture_date} {this.state.fixture_time}
+                        
+                       </div>
+                       
+                      
+                       
+                     </div>
+                     <hr></hr>
+                     
       <Grid container spacing={2} >
       <Grid item xs={4}
             
@@ -310,22 +528,20 @@ refreshTeamPlayers() {
               >
                 Toss:
               </FormLabel>
-             
+              <RadioGroup aria-label="toss" name="toss" onChange={this.handleElement}>
               <FormControlLabel
-             //value={this.state.selectedValue}
-            onChange={this.handleChange}
-            value={this.state.selectedValue}
             control={<Radio color="primary" />}
-            label="Pakistan"
-            labelPlacement="start"
+            value={this.state.team1}
+            label={this.state.team1}
+            
           />
           <FormControlLabel
-           // value={this.state.selectedValue}
-            onChange={this.handleChange}
             control={<Radio color="primary" />}
-            label="West Indies"
-            labelPlacement="start"
+            label={this.state.team2}
+            value={this.state.team2}
+          
           />
+          </RadioGroup>
           
                <br />
               <br />
@@ -342,8 +558,8 @@ refreshTeamPlayers() {
                 className={classes.margin, classes.textField}
                 variant="outlined"
                 label="With Select"
-                value={this.state.toss}
-                onChange={this.handleChange("toss")}
+                name="toss_decision"
+                onChange={this.handleElement}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -372,8 +588,10 @@ refreshTeamPlayers() {
               <label>On Field Umpire 1:</label>
               <Autocomplete
                 className={classes.margin}
-                options={this.state.umpires}
-                getOptionLabel={option => option.first_name + " "+ option.middle_name +" "+ option.last_name}
+                options={this.state.umpire_names}
+                name="umpire1"
+                onChange={this.onSelectChange1}
+                
                 style={{ width: 300 }}
                 renderInput={params => (
                   <TextField
@@ -391,8 +609,10 @@ refreshTeamPlayers() {
               <label>On Field Umpire 2:</label>
               <Autocomplete
                 className={classes.margin}
-                options={this.state.umpires}
-                getOptionLabel={option => option.first_name + " "+ option.middle_name +" "+ option.last_name}
+                options={this.state.umpire_names}
+                name="umpire2"
+                onChange={this.onSelectChange2}
+                
                 style={{ width:300 }}
                 renderInput={params => (
                   <TextField
@@ -410,8 +630,10 @@ refreshTeamPlayers() {
               <label>Third Umpire:</label>
               <Autocomplete
                 className={classes.margin}
-                options={this.state.umpires}
-                getOptionLabel={option => option.first_name + " "+ option.middle_name +" "+ option.last_name}
+                options={this.state.umpire_names}
+                name="umpire3"
+                onChange={this.onSelectChange3}
+               
                 style={{ width: 300 }}
                 renderInput={params => (
                   <TextField
@@ -429,8 +651,10 @@ refreshTeamPlayers() {
               <label>Match Refree:</label>
               <Autocomplete
                 className={classes.margin}
-                options={this.state.referees}
-                getOptionLabel={option => option.first_name + " "+ option.middle_name +" "+ option.last_name}
+                options={this.state.referee_names}
+                name="referee"
+                onChange={this.onSelectChange4}
+               
                 style={{ width: 300 }}
                 renderInput={params => (
                   <TextField
@@ -440,7 +664,7 @@ refreshTeamPlayers() {
                   />
                 )}
               />
-             
+          
             </Paper>
           </Grid>
           
@@ -466,9 +690,9 @@ refreshTeamPlayers() {
              
               
 
-              <Grid container spacing={9}>
+              <Grid container spacing={1}>
 
-              <Grid item xs={6}>
+              <Grid item xs={7}>
               <h3>SQUAD</h3>
               <br />
               <FormControl required error={error} component="fieldset" className={classes.formControl}>
@@ -476,198 +700,74 @@ refreshTeamPlayers() {
               <FormGroup column>
                 <FormLabel component="legend">B1</FormLabel>
 
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checkedA}
-                      onChange={this.handleChange("checkedA","Ahmed Shehzad")}
-                      value="checkedA"
-                      color="primary"
-                    //  class="checks"
-                    />
-                  }
-                  label="Ahmed Shehzad"
-                />
+              
+                 {this.state.teamplayers1.map((tp) =>{
+                    if(tp.category=="B1")
+                 return <div>
                  <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checkedB}
-                      onChange={this.handleChange("checkedB","Asif Ali")}
-                      value="checkedB"
+                      
+                      onChange={this.handleChange(tp.player_first_name+tp.player_last_name+tp.player_initials,tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials,tp.category)}
+                      value={tp.player_first_name+tp.player_last_name+tp.player_initials}
                       color="primary"
-                    //  class="checks"
+                      
+                   
                     />
+                      
                   }
-                  label="Asif Ali"
+                  label = {tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials}
                 />
-                 <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checkedC}
-                      onChange={this.handleChange("checkedC","Babar Azam")}
-                      value="checkedC"
-                      color="primary"
-                    //  class="checks"
-                    />
-                  }
-                  label="Babar Azam"
-                />
-                
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                    checked={this.state.checkedD}
-                      onChange={this.handleChange("checkedD","FaheemAshraf")}
-                      value="checkedD"
-                      color="primary"
-                     // class="checks"
-                    />
-                  }
-                  label="Faheem Ashraf"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                     checked={this.state.checkedE}
-                      onChange={this.handleChange("checkedE","FakharZaman")}
-                      value="checkedE"
-                      color="primary"
-                    //  class="checks"
-                    />
-                  }
-                  label="Fakhar Zaman"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checkedF}
-                      onChange={this.handleChange("checkedF","HasanAli")}
-                      value="checkedF"
-                      color="primary"
-//class="checks"
-                    />
-                  }
-                  label="Hasan Ali"
-                />
-                <Divider />
-                <br />
-              </FormGroup>
-              <FormGroup column>
-                <FormLabel component="legend">B2</FormLabel>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                    checked={this.state.checkedG}
-                      onChange={this.handleChange("checkedG","HussainTalat")}
-                      value="checkedG"
-                      color="primary"
-                    //  class="checks"
-                    />
-                  }
-                  label="Hussain Talat"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checkedH}
-                      onChange={this.handleChange("checkedH","MohammadAmir")}
-                      value="checkedH"
-                      color="primary"
-                    //  class="checks"
-                    />
-                  }
-                  label="Mohammad Amir"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checkedI}
-                      onChange={this.handleChange("checkedI","MohmamadNawar")}
-                      value="checkedI"
-                      color="primary"
-                    //  class="checks"
-                    />
-                  }
-                  label="Mohammad Nawar"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                    checked={this.state.checkedJ}
-                      onChange={this.handleChange("checkedJ","RahatAli")}
-                      value="checkedJ"
-                      color="primary"
-                     // class="checks"
-                    />
-                  }
-                  label="Rahat Ali"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                     checked={this.state.checkedK}
-                      onChange={this.handleChange("checkedK","SarfrazAhmed")}
-                      value="checkedK"
-                      color="primary"
-                    //  class="checks"
-                    />
-                  }
-                  label="Sarfraz Ahmed"
-                />
+                </div>
+                 } )}
 
                 <Divider />
-                <br />
-              </FormGroup>
-              <FormGroup column>
+                <FormLabel component="legend">B2</FormLabel>
+
+              
+                 {this.state.teamplayers1.map((tp) =>{
+                    if(tp.category=="B2")
+                 return <div>
+                 <FormControlLabel
+                  control={
+                    <Checkbox
+                      
+                      onChange={this.handleChange(tp.player_first_name+tp.player_last_name+tp.player_initials,tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials,tp.category)}
+                      value={tp.player_first_name+tp.player_last_name+tp.player_initials}
+                      color="primary"
+                      
+                   
+                    />
+                      
+                  }
+                  label = {tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials}
+                />
+                </div>
+                 } )}
+
+                <Divider />
                 <FormLabel component="legend">B3</FormLabel>
-                <FormControlLabel
+
+              
+                 {this.state.teamplayers1.map((tp) =>{
+                    if(tp.category=="B3")
+                 return <div>
+                 <FormControlLabel
                   control={
                     <Checkbox
-                     checked={this.state.checkedL}
-                      onChange={this.handleChange("checkedL","ShadabKhan")}
-                      value="checkedL"
+                      
+                      onChange={this.handleChange(tp.player_first_name+tp.player_last_name+tp.player_initials,tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials,tp.category)}
+                      value={tp.player_first_name+tp.player_last_name+tp.player_initials}
                       color="primary"
-                  //    class="checks"
+                      
+                   
                     />
+                      
                   }
-                  label="Shadab Khan"
+                  label = {tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials}
                 />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                     checked={this.state.checkedM}
-                      onChange={this.handleChange("checkedM","ShaheenAfridi")}
-                      value="checkedM"
-                      color="primary"
-                     // class="checks"
-                    />
-                  }
-                  label="Shaheen Afridi"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                    checked={this.state.checkedN}
-                      onChange={this.handleChange("checkedN","ShoaibMalik")}
-                      value="checkedC"
-                      color="primary"
-                     // class="checks"
-                    />
-                  }
-                  label="Shoaib Malik"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checkedO}
-                      onChange={this.handleChange("checkedO","UsmanKhan")}
-                      value="checkedO"
-                      color="primary"
-                    //  class="checks"
-                    />
-                  }
-                  label="Usman Khan"
-                />
+                </div>
+                 } )}
 
                 <Divider />
               </FormGroup>
@@ -675,7 +775,7 @@ refreshTeamPlayers() {
 
               </Grid>
               
-              <Grid item xs={2}>
+              <Grid item xs={4}>
               <h3>Playing 11</h3>
               <TextareaAutosize aria-label="minimum height" rowsMin={45} type="text" id="selectedtext"   value={this.state.player} />
             
@@ -683,7 +783,7 @@ refreshTeamPlayers() {
               </Grid>
               <br />
              
-              <label>Captin:</label>
+              <label>Captain:</label>
               <br />
               <br />
               <TextField
@@ -693,17 +793,17 @@ refreshTeamPlayers() {
                 className={classes.margin, classes.textField}
                 variant="outlined"
                 label="With Select"
-                onChange={this.handleChange("captain1")}
+                onChange={this.handleCaptainWicket("captain1")}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      --Select Captin--
+                      --Select Captain--
                     </InputAdornment>
                   )
                 }}
               >
                 { 
-                this.state.teamplayers.map(option => (
+                this.state.teamplayers1.map(option => (
                   <MenuItem key={option.player_first_name + " "+option.player_last_name +" "+option.player_initials
                   } value={option.player_first_name + " "+option.player_last_name +" "+option.player_initials }>
                     {option.player_first_name + " "+option.player_last_name +" "+option.player_initials}
@@ -723,7 +823,7 @@ refreshTeamPlayers() {
                 variant="outlined"
                 label="With Select"
                 
-                onChange={this.handleChange("wicket1")}
+                onChange={this.handleCaptainWicket("wicket1")}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -732,7 +832,7 @@ refreshTeamPlayers() {
                   )
                 }}
               >
-               {  this.state.teamplayers.map(option => (
+               {  this.state.teamplayers1.map(option => (
                   <MenuItem key={option.player_first_name + " "+option.player_last_name +" "+option.player_initials
                 } value={option.player_first_name + " "+option.player_last_name +" "+option.player_initials }>
                   {option.player_first_name + " "+option.player_last_name +" "+option.player_initials}
@@ -763,168 +863,82 @@ refreshTeamPlayers() {
               </center>
               <br />
               
-              <Grid container spacing={9}>
-                <Grid item xs={6}>
+              <Grid container spacing={1}>
+                <Grid item xs={7}>
                 <h3>SQUAD</h3>
                 <br />
                 <FormControl required error={error} component="fieldset" className={classes.formControl}>
                 <FormGroup column>
                 <FormLabel component="legend">B1</FormLabel>
-                <FormControlLabel
+
+              
+                 {this.state.teamplayers2.map((tp) =>{
+                    if(tp.category=="B1")
+                 return <div>
+                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked1}
-                      onChange={this.handleChange1("checked1","Andre Fletcher")}
-                      value="checked1"
+                      
+                      onChange={this.handleChange1(tp.player_first_name+tp.player_last_name+tp.player_initials,tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials,tp.category)}
+                      value={tp.player_first_name+tp.player_last_name+tp.player_initials}
                       color="primary"
+                      
+                   
                     />
+                      
                   }
-                  label="Andre Fletcher"
+                  label = {tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials}
                 />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked2}
-                      onChange={this.handleChange1("checked2","Andre MeCarthy")}
-                      value="checked2"
-                      color="primary"
-                    />
-                  }
-                  label="AndreMeCarthy"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked3}
-                      onChange={this.handleChange1("checked3","Chadwick Walton")}
-                      value="checked3"
-                      color="primary"
-                    />
-                  }
-                  label="Chadwick Walton"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked4}
-                      onChange={this.handleChange1("checked4","Denesh Ramdin")}
-                      value="checked4"
-                      color="primary"
-                    />
-                  }
-                  label="Denesh Ramdin"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked5}
-                      onChange={this.handleChange1("checked5","Jason Mohammad")}
-                      value="checked5"
-                      color="primary"
-                    />
-                  }
-                  label="Jason Mohammad"
-                />
+                </div>
+                 } )}
 
                 <Divider />
-                <br />
-              </FormGroup>
-              <FormGroup column>
                 <FormLabel component="legend">B2</FormLabel>
-                <FormControlLabel
+
+              
+                 {this.state.teamplayers2.map((tp) =>{
+                    if(tp.category=="B2")
+                 return <div>
+                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked6}
-                      onChange={this.handleChange1("checked6","Keerno Paul")}
-                      value="checked6"
+                      
+                      onChange={this.handleChange1(tp.player_first_name+tp.player_last_name+tp.player_initials,tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials,tp.category)}
+                      value={tp.player_first_name+tp.player_last_name+tp.player_initials}
                       color="primary"
+                      
+                   
                     />
+                      
                   }
-                  label="Keerno Paul"
+                  label = {tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials}
                 />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked7}
-                      onChange={this.handleChange1("checked7","Kesrick Williams")}
-                      value="checked7"
-                      color="primary"
-                    />
-                  }
-                  label="Kesrick Williams"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked8}
-                      onChange={this.handleChange1("checked8","Marlon Samuels")}
-                      value="checked8"
-                      color="primary"
-                    />
-                  }
-                  label="Marlon Samuels"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked9}
-                      onChange={this.handleChange1("checked9","Odean Smith")}
-                      value="checked9"
-                      color="primary"
-                    />
-                  }
-                  label="Odean Smith"
-                />
+                </div>
+                 } )}
 
                 <Divider />
-                <br />
-              </FormGroup>
-              <FormGroup column>
                 <FormLabel component="legend">B3</FormLabel>
-                <FormControlLabel
+
+              
+                 {this.state.teamplayers2.map((tp) =>{
+                    if(tp.category=="B3")
+                 return <div>
+                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.checked10}
-                      onChange={this.handleChange1("checked10","Rayad Emrit")}
-                      value="checked10"
+                      
+                      onChange={this.handleChange1(tp.player_first_name+tp.player_last_name+tp.player_initials,tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials,tp.category)}
+                      value={tp.player_first_name+tp.player_last_name+tp.player_initials}
                       color="primary"
+                      
+                   
                     />
+                      
                   }
-                  label="Rayad Emrit"
+                  label = {tp.player_first_name+" "+tp.player_last_name+" "+tp.player_initials}
                 />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked11}
-                      onChange={this.handleChange1("checked11","Samual Badree")}
-                      value="checked11"
-                      color="primary"
-                    />
-                  }
-                  label="Samual Badree"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked12}
-                      onChange={this.handleChange1("checked12","Veerasamy Permaul")}
-                      value="checked12"
-                      color="primary"
-                    />
-                  }
-                  label="Veerasamy Permaul"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.checked13}
-                      onChange={this.handleChange1("checked13","Rovman Powell")}
-                      value="checked13"
-                      color="primary"
-                    />
-                  }
-                  label="Rovman Powell"
-                />
+                </div>
+                 } )}
 
                 <Divider />
               </FormGroup>
@@ -938,7 +952,7 @@ refreshTeamPlayers() {
               </Grid>
               </Grid>
               <br />
-              <label>Captin:</label>
+              <label>Captain:</label>
               <br />
               <br />
               <TextField
@@ -948,16 +962,16 @@ refreshTeamPlayers() {
                 className={classes.margin, classes.textField}
                 variant="outlined"
                 label="With Select"
-                onChange={this.handleChange("captain2")}
+                onChange={this.handleCaptainWicket("captain2")}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      --Select Captin--
+                      --Select Captain--
                     </InputAdornment>
                   )
                 }}
               >
-                {this.state.teamplayers.map(option => (
+                {this.state.teamplayers2.map(option => (
                   <MenuItem key={option.player_first_name + " "+option.player_last_name +" "+option.player_initials
                 } value={option.player_first_name + " "+option.player_last_name +" "+option.player_initials }>
                   {option.player_first_name + " "+option.player_last_name +" "+option.player_initials}
@@ -976,7 +990,7 @@ refreshTeamPlayers() {
                 className={classes.margin, classes.textField}
                 variant="outlined"
                 label="With Select"
-                onChange={this.handleChange("wicket2")}
+                onChange={this.handleCaptainWicket("wicket2")}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -985,7 +999,7 @@ refreshTeamPlayers() {
                   )
                 }}
               >
-                {this.state.teamplayers.map(option => (
+                {this.state.teamplayers2.map(option => (
                   <MenuItem key={option.player_first_name + " "+option.player_last_name +" "+option.player_initials
                 } value={option.player_first_name + " "+option.player_last_name +" "+option.player_initials }>
                   {option.player_first_name + " "+option.player_last_name +" "+option.player_initials}
@@ -1008,7 +1022,8 @@ refreshTeamPlayers() {
                 variant="contained"
                 style={{ width: "150px" }}
                 className={classes.button}
-                href="/scorer/ScoringScreen"
+                type="submit"
+                onClick={this.onSubmit}
               >
                 Submit
               </Button>
@@ -1019,6 +1034,193 @@ refreshTeamPlayers() {
             </Paper>
                 </Grid>
     </Grid>
+
+
+
+    <Dialog
+          open={this.state.open1}
+          TransitionComponent={Transition}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            <span
+              style={{
+                fontFamily: "HelveticaforTargetBold,Arial",
+                color: "#646566",
+                fontWeight: "bolder"
+              }}
+            >
+             Select 4 B1 players in team {this.state.team1}
+            </span>
+          </DialogTitle>
+
+          <DialogContent>
+         
+          </DialogContent>
+          <DialogActions>
+            
+            <Button
+             onClick={() => {
+                this.setState({ open1: false});
+              }}
+              variant="outlined"
+            >
+            OK
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+       
+
+        <Dialog
+          open={this.state.open2}
+          TransitionComponent={Transition}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            <span
+              style={{
+                fontFamily: "HelveticaforTargetBold,Arial",
+                color: "#646566",
+                fontWeight: "bolder"
+              }}
+            >
+             Select 4 B2 and 3 B3 players or 3 B2 and 4 B3 players in team {this.state.team1}
+            </span>
+          </DialogTitle>
+
+          <DialogContent>
+         
+          </DialogContent>
+          <DialogActions>
+            
+            <Button
+             onClick={() => {
+                this.setState({ open2: false});
+              }}
+              variant="outlined"
+            >
+            OK
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.open3}
+          TransitionComponent={Transition}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            <span
+              style={{
+                fontFamily: "HelveticaforTargetBold,Arial",
+                color: "#646566",
+                fontWeight: "bolder"
+              }}
+            >
+             Select 4 B1 players in team {this.state.team2}
+            </span>
+          </DialogTitle>
+
+          <DialogContent>
+         
+          </DialogContent>
+          <DialogActions>
+            
+            <Button
+             onClick={() => {
+                this.setState({ open3: false});
+              }}
+              variant="outlined"
+            >
+            OK
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.open4}
+          TransitionComponent={Transition}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            <span
+              style={{
+                fontFamily: "HelveticaforTargetBold,Arial",
+                color: "#646566",
+                fontWeight: "bolder"
+              }}
+            >
+             Select 4 B2 and 3 B3 players or 3 B2 and 4 B3 players in team {this.state.team2}
+            </span>
+          </DialogTitle>
+
+          <DialogContent>
+         
+          </DialogContent>
+          <DialogActions>
+            
+            <Button
+             onClick={() => {
+                this.setState({ open4: false});
+              }}
+              variant="outlined"
+            >
+            OK
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.open5}
+          TransitionComponent={Transition}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            <span
+              style={{
+                fontFamily: "HelveticaforTargetBold,Arial",
+                color: "#646566",
+                fontWeight: "bolder"
+              }}
+            >
+            Are you sure you want to submit?
+            </span>
+          </DialogTitle>
+
+          <DialogContent>
+         You won't be able to make changes later.
+          </DialogContent>
+          <DialogActions>
+            
+            <Button
+             onClick={this.finalSubmit}
+              
+              variant="outlined"
+            >
+            Yes
+            </Button>
+            <Button
+             onClick={() => {
+                this.setState({ open5: false});
+              }}
+              variant="outlined"
+            >
+            No
+            </Button>
+          </DialogActions>
+        </Dialog>
+
   </div>
           
         

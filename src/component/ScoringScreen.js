@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -86,7 +86,7 @@ class ScoringScreen extends React.Component {
     super(props)
      if(JSON.parse(window.localStorage.getItem('data'))){ //if 'data' is not empty fetch values from localStorage itself
       this.state = {
-      match_id : "18ac3505-a20f-48ca-a822-ba66f62ac46e",
+      match_id : this.props.match.params.id,
       striker_batsman:JSON.parse(window.localStorage.getItem('data')).striker_batsman,
       non_striker_batsman:JSON.parse(window.localStorage.getItem('data')).non_striker_batsman,
       current_bowler:JSON.parse(window.localStorage.getItem('data')).current_bowler,
@@ -144,7 +144,7 @@ class ScoringScreen extends React.Component {
 }
 else{
     this.state =  {
-        match_id : "18ac3505-a20f-48ca-a822-ba66f62ac46e",
+        match_id : this.props.match.params.id,
         striker_batsman: null,
         non_striker_batsman: null,
         current_bowler: null,
@@ -195,7 +195,8 @@ else{
         open_next_bowler_form: false,
         open_end_match_form: false,
         open_end_innings_form: false,
-        disabled: false
+        disabled: false,
+        exchange: false
     }
   }
     window.localStorage.setItem('data',JSON.stringify(this.state))
@@ -321,6 +322,13 @@ else{
   }
 
   increaseScoreBy0(){
+    /* if (
+      this.state.striker_batsman === null ||
+      this.state.non_striker_batsman === null ||
+      this.state.current_bowler === null
+    ) {
+      alert("Players not selected!");
+    } */
     this.setState({
         balls_per_over : this.state.balls_per_over +1,
         striker : {
@@ -357,6 +365,7 @@ else{
       }
       if(this.state.balls_per_over >= 0){
         this.handleCreateAfterOver();
+        this.handleCreateMatchResult();
       }
       window.localStorage.setItem('data',JSON.stringify(this.state))
       window.localStorage.getItem('data')
@@ -400,6 +409,7 @@ else{
         })
         this.openNextBowlerForm();
         this.handleCreateAfterOver();
+        this.handleCreateMatchResult();
       }
      
       window.localStorage.setItem('data',JSON.stringify(this.state))
@@ -437,8 +447,11 @@ else{
 
       }
     })
+    //this.handleCreateAfterOver();
+      //  this.handleCreateMatchResult();
     if(this.state.balls_per_over >= 0){
       this.handleCreateAfterOver();
+      this.handleCreateMatchResult();
     }
     window.localStorage.setItem('data',JSON.stringify(this.state))
     }
@@ -479,11 +492,14 @@ else{
           }
       })
       this.openNextBowlerForm();
-      this.handleCreateAfterOver();
+     
     }
-    if(this.state.balls_per_over >= 0){
+    this.handleCreateAfterOver();
+        this.handleCreateMatchResult();
+    /* if(this.state.balls_per_over >= 0){
       this.handleCreateAfterOver();
-    }
+      this.handleCreateMatchResult();
+    } */
     window.localStorage.setItem('data',JSON.stringify(this.state))
      window.localStorage.getItem('data')
    }
@@ -523,12 +539,16 @@ else{
              maiden_count : 0
           }
         })
-        if(this.state.balls_per_over >= 0){
+        //this.handleCreateAfterOver();
+        //this.handleCreateMatchResult();
+        /* if(this.state.balls_per_over >= 0){
           this.handleCreateAfterOver();
-        }
+          this.handleCreateMatchResult();
+        } */
         this.openNextBowlerForm();
-        this.handleCreateAfterOver();
       }
+      this.handleCreateAfterOver();
+        this.handleCreateMatchResult();
      
       localStorage.setItem('data',JSON.stringify(this.state));
       localStorage.getItem('data')
@@ -564,9 +584,12 @@ else{
        out_by : null
       }
     })
-    if(this.state.balls_per_over >= 0){
+    this.handleCreateAfterOver();
+        this.handleCreateMatchResult();
+    /* if(this.state.balls_per_over >= 0){
       this.handleCreateAfterOver();
-    }
+      this.handleCreateMatchResult();
+    } */
     window.localStorage.setItem('data',JSON.stringify(this.state))
     }
 
@@ -608,11 +631,14 @@ increaseScoreBy4(){
       }
     })
     this.openNextBowlerForm();
-    this.handleCreateAfterOver();
+    
   }
-  if(this.state.balls_per_over >= 0){
+  this.handleCreateAfterOver();
+        this.handleCreateMatchResult();
+  /* if(this.state.balls_per_over >= 0){
     this.handleCreateAfterOver();
-  }
+    this.handleCreateMatchResult();
+  } */
   window.localStorage.setItem('data',JSON.stringify(this.state))
   window.localStorage.getItem('data')
  }
@@ -654,6 +680,7 @@ increaseScoreBy5(){
         })
         this.openNextBowlerForm();
         this.handleCreateAfterOver();
+        this.handleCreateMatchResult();
       }
      
       window.localStorage.setItem('data',JSON.stringify(this.state))
@@ -692,9 +719,12 @@ increaseScoreBy5(){
 
       }
     })
-    if(this.state.balls_per_over >= 0){
+    this.handleCreateAfterOver();
+        this.handleCreateMatchResult();
+    /* if(this.state.balls_per_over >= 0){
       this.handleCreateAfterOver();
-    }
+      this.handleCreateMatchResult();
+    } */
     window.localStorage.setItem('data',JSON.stringify(this.state))
     }
 
@@ -734,11 +764,13 @@ increaseScoreBy5(){
           }
         })
         this.openNextBowlerForm();
-        this.handleCreateAfterOver();
       }
-      if(this.state.balls_per_over >= 0){
         this.handleCreateAfterOver();
-      }
+        this.handleCreateMatchResult();
+      /* if(this.state.balls_per_over >= 0){
+        this.handleCreateAfterOver();
+        this.handleCreateMatchResult();
+      } */
       window.localStorage.setItem('data',JSON.stringify(this.state))
       window.localStorage.getItem('data')
      }
@@ -794,9 +826,11 @@ increaseScoreBy5(){
       }
     }
     this.setState({disabled: true})
+    this.handleInitialMatchDetails();
     };
   
     handleNextBatsmanSubmit = () => {
+      this.handleCreateAfterOver();
       var batsman = {
         striker_batsman: this.state.striker_batsman,
       };
@@ -872,7 +906,7 @@ increaseScoreBy5(){
         batting_team_score : 0, 
         batting_team_wickets : 0, 
         total_overs : 0, 
-        balls_per_over : 6,
+        balls_per_over : 0,
         striker : {
           runs : 0,
           balls : 0, 
@@ -914,14 +948,18 @@ increaseScoreBy5(){
         previous_bowler : null,
         team2_players: old_team1_players,
         team1_players: this.state.team2_players,
-        disabled: false
+        disabled: false,
+        exchange: true
       });
       window.localStorage.setItem('data',JSON.stringify(this.state))
+      this.handleCreateAfterOver();
+    this.handleCreateMatchResult();
     };
   
     handleEndMatchClicked = () => {
+      this.handleFinalMatchResult();
       this.setState({ open_end_match_form: false });
-      this.props.history.push("/scorer/MatchSelection");
+      this.props.history.push("/scorer/Scorecard");
     };
 
     handleCreateAfterOver = () => {
@@ -966,19 +1004,10 @@ increaseScoreBy5(){
          runs : this.state.p_bowler.runs,
          wickets : this.state.p_bowler.wickets
        };
-       var score = {
-         match_id : this.state.match_id,
-         batting_team_score : this.state.batting_team_score,
-         batting_team_wickets : this.state.batting_team_wickets,
-         batting_team : this.state.batting_team,
-         bowling_team : this.state.bowling_team,
-         bowling_team_wickets : this.state.bowling_team_wickets,
-         bowling_team_score : this.state.bowling_team_score,
-        // batting_team_overs : this.state.total_overs
-       }
-      // console.log(striker_batsman);
-      // console.log(non_striker_batsman);
-      // console.log(current_bowler);
+      
+      //console.log(striker_batsman);
+      //console.log(non_striker_batsman);
+      //console.log(current_bowler);
       ScorecardDataService.createBatsmanInAMatch(striker_batsman)
       .then(
         response => {
@@ -1000,11 +1029,7 @@ increaseScoreBy5(){
             response => {
                 console.log(response);
             }); 
-        ScorecardDataService.createTotalMatchScore(score)
-          .then(
-            response => {
-                console.log(response);
-            }); 
+       
         
     };
   
@@ -1020,7 +1045,12 @@ increaseScoreBy5(){
         sixes: this.state.striker.sixes,
         out_by: this.state.current_bowler,
       };
-      console.log(striker_batsman);
+      //console.log(striker_batsman);
+      ScorecardDataService.createBatsmanInAMatch(striker_batsman).then(
+        (response) => {
+          console.log(response);
+        }
+      );
           };
 
     handlePreviousBowler = () => {
@@ -1035,6 +1065,149 @@ increaseScoreBy5(){
         }
       })
     }
+
+    handleCreateMatchResult = () => {
+      if (!this.state.exchange) {
+        var match_result = {
+          match_id: this.state.match_id,
+          team1: this.state.batting_team,
+          team2: this.state.bowling_team,
+          team1_result: {
+            runs: this.state.batting_team_score,
+            wickets: this.state.batting_team_wickets,
+          },
+          team2_result: {
+            runs: this.state.bowling_team_score,
+            wickets: this.state.bowling_team_wickets,
+          },
+        };
+      } else {
+        var match_result = {
+          match_id: this.state.match_id,
+          team2: this.state.batting_team,
+          team1: this.state.bowling_team,
+          team2_result: {
+            runs: this.state.batting_team_score,
+            wickets: this.state.batting_team_wickets,
+          },
+          team1_result: {
+            runs: this.state.bowling_team_score,
+            wickets: this.state.bowling_team_wickets,
+          },
+        };
+      }
+      //console.log(match_result);
+      ScorecardDataService.createMatchResult(match_result).then((response) => {
+        console.log(response);
+      });
+    };
+  
+    handleFinalMatchResult = () => {
+      this.handleCreateAfterOver();
+        if (this.state.bowling_team_score > this.state.batting_team_score) {
+          var final_match_result = {
+            match_id: this.state.match_id,
+            team2: this.state.batting_team,
+            team1: this.state.bowling_team,
+            team2_result: {
+              runs: this.state.batting_team_score,
+              wickets: this.state.batting_team_wickets,
+            },
+            team1_result: {
+              runs: this.state.bowling_team_score,
+              wickets: this.state.bowling_team_wickets,
+            },
+            match_result: this.state.bowling_team,
+            winning_score: {
+              runs: this.state.bowling_team_score - this.state.batting_team_score
+            }
+          }
+         } else if (
+          this.state.bowling_team_score < this.state.batting_team_score
+        ) {
+          var final_match_result = {
+            match_id: this.state.match_id,
+            team2: this.state.batting_team,
+            team1: this.state.bowling_team,
+            team2_result: {
+              runs: this.state.batting_team_score,
+              wickets: this.state.batting_team_wickets,
+            },
+            team1_result: {
+              runs: this.state.bowling_team_score,
+              wickets: this.state.bowling_team_wickets,
+            },
+            match_result: this.state.batting_team,
+            winning_score: {
+              wickets: 10 - this.state.batting_team_wickets
+            }
+          }
+        } else {
+          var final_match_result = {
+            match_id: this.state.match_id,
+            team2: this.state.batting_team,
+            team1: this.state.bowling_team,
+            team2_result: {
+              runs: this.state.batting_team_score,
+              wickets: this.state.batting_team_wickets,
+            },
+            team1_result: {
+              runs: this.state.bowling_team_score,
+              wickets: this.state.bowling_team_wickets,
+            },
+            match_result: ("Draw Match")
+          }
+        }    
+      //console.log(final_match_result);
+      ScorecardDataService.createMatchResult(final_match_result).then((response) => {
+        console.log(response);
+      });
+    };
+  
+  handleInitialMatchDetails = () => {
+    var striker_batsman = {
+      match_id: this.state.match_id,
+      batsman_name: this.state.striker_batsman,
+      team_name: this.state.batting_team
+    };
+  
+    var non_striker_batsman = {
+      match_id: this.state.match_id,
+      batsman_name: this.state.non_striker_batsman,
+      team_name: this.state.batting_team
+    };
+  
+    var current_bowler = {
+      match_id: this.state.match_id,
+      bowler_name: this.state.current_bowler,
+      team_name: this.state.bowling_team
+    };
+    ScorecardDataService.createBatsmanInAMatch(striker_batsman).then(
+      (response) => {
+        console.log(response);
+      }
+    );
+    ScorecardDataService.createBatsmanInAMatch(non_striker_batsman).then(
+      (response) => {
+        console.log(response);
+      }
+    );
+    ScorecardDataService.createBowlerInAMatch(current_bowler).then(
+      (response) => {
+        console.log(response);
+      }
+    );
+  
+    var matchresult = {
+      match_id: this.state.match_id,
+      team1: this.state.batting_team,
+      team2: this.state.bowling_team,
+    };
+    //console.log(matchresult)
+    ScorecardDataService.createMatchResult(matchresult).then((response) => {
+      console.log(response);
+    });
+  }
 
    render(){
     const { classes } = this.props;
