@@ -125,7 +125,7 @@ class ScoringScreen extends React.Component {
         wickets :JSON.parse(window.localStorage.getItem('data')).bowler.wickets
       },
       p_bowler :{
-        //balls : JSON.parse(window.localStorage.getItem('data')).p_bowler.balls,
+        balls : JSON.parse(window.localStorage.getItem('data')).p_bowler.balls,
         maiden_count :JSON.parse(window.localStorage.getItem('data')).p_bowler.maiden_count,
         overs :JSON.parse(window.localStorage.getItem('data')).p_bowler.overs,
         maidens :JSON.parse(window.localStorage.getItem('data')).p_bowler.maiden_count,
