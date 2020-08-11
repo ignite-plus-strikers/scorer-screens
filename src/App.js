@@ -6,7 +6,6 @@ import MatchSelection from './component/MatchSelection'
 import PreMatch from './component/PreMatch'
 import Header from './component/Header'
 import ScoringScreen from './component/ScoringScreen'
-
 import Clock from './component/Clock'
 import {green,yellow,blue,pink} from "@material-ui/core/colors";
 import ScoreCard from './component/ScoreCard';

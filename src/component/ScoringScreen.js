@@ -242,7 +242,7 @@ else{
       batting_team_wickets : this.state.batting_team_wickets +1,
       balls_per_over : this.state.balls_per_over,
       striker:{
-        runs : this.state.striker.runs ,
+          runs : this.state.striker.runs ,
           fours : this.state.striker.fours,
           sixes : this.state.striker.sixes,
           balls : this.state.striker.balls +1,
@@ -328,7 +328,8 @@ else{
           fours : this.state.striker.fours,
           sixes : this.state.striker.sixes,
           balls : this.state.striker.balls +1,
-          strike_rate : ((this.state.striker.runs * 100)/(this.state.striker.balls)).toFixed(2)
+          strike_rate : ((this.state.striker.runs * 100)/(this.state.striker.balls)).toFixed(2),
+          out_by : null
         },
         bowler : {
           balls : this.state.bowler.balls +1,
@@ -372,6 +373,7 @@ else{
         strike_rate : ((this.state.striker.runs * 100)/(this.state.striker.balls)).toFixed(2),
         fours : this.state.striker.fours,
         sixes : this.state.striker.sixes,
+        out_by : null
        },
        
        bowler : {
@@ -420,7 +422,8 @@ else{
         balls: old_non_striker_balls ,
         fours: old_non_striker_fours,
         sixes: old_non_striker_sixes,
-        strike_rate : ((old_non_striker_runs*100)/(old_non_striker_balls)).toFixed(2)
+        strike_rate : ((old_non_striker_runs*100)/(old_non_striker_balls)).toFixed(2),
+        out_by : null
       } })
       this.setState({
         non_striker_batsman: old_striker,
@@ -429,7 +432,9 @@ else{
         balls: old_striker_balls +1,
         fours: old_striker_fours,
         sixes: old_striker_sixes,
-       strike_rate : ((old_striker_runs*100)/(old_striker_balls)).toFixed(2)
+       strike_rate : ((old_striker_runs*100)/(old_striker_balls)).toFixed(2),
+       out_by : null
+
       }
     })
     if(this.state.balls_per_over >= 0){
@@ -448,6 +453,8 @@ else{
        strike_rate : ((this.state.striker.runs * 100)/(this.state.striker.balls)).toFixed(2),
        fours : this.state.striker.fours,
        sixes : this.state.striker.sixes,
+       out_by : null
+
       },
       bowler : {
         runs : this.state.bowler.runs +2,
@@ -491,6 +498,7 @@ else{
         strike_rate : ((this.state.striker.runs * 100)/(this.state.striker.balls)).toFixed(2),
         fours : this.state.striker.fours,
         sixes : this.state.striker.sixes,
+        out_by : null
        },
        
        bowler : {
@@ -542,7 +550,8 @@ else{
         balls: old_non_striker_balls ,
         fours: old_non_striker_fours,
         sixes: old_non_striker_sixes,
-        strike_rate : ((old_striker_runs*100)/(old_striker_balls)).toFixed(2)
+        strike_rate : ((old_striker_runs*100)/(old_striker_balls)).toFixed(2),
+        out_by : null
       } })
       this.setState({
         non_striker_batsman: old_striker,
@@ -551,7 +560,8 @@ else{
         balls: old_striker_balls +1,
         fours: old_striker_fours,
         sixes: old_striker_sixes,
-       strike_rate : ((old_non_striker_runs*100)/(old_non_striker_balls)).toFixed(2)
+       strike_rate : ((old_non_striker_runs*100)/(old_non_striker_balls)).toFixed(2),
+       out_by : null
       }
     })
     if(this.state.balls_per_over >= 0){
@@ -570,7 +580,9 @@ increaseScoreBy4(){
      balls : this.state.striker.balls +1,
      strike_rate : ((this.state.striker.runs * 100)/(this.state.striker.balls)).toFixed(2),
      sixes : this.state.striker.sixes,
-     fours : this.state.striker.fours +1
+     fours : this.state.striker.fours +1,
+     out_by : null
+
     },
     bowler : {
       runs : this.state.bowler.runs +4,
@@ -615,6 +627,7 @@ increaseScoreBy5(){
         strike_rate : ((this.state.striker.runs * 100)/(this.state.striker.balls)).toFixed(2),
         fours : this.state.striker.fours,
         sixes : this.state.striker.sixes,
+        out_by : null
        },
        
        bowler : {
@@ -663,7 +676,9 @@ increaseScoreBy5(){
         balls: old_non_striker_balls ,
         fours: old_non_striker_fours,
         sixes: old_non_striker_sixes,
-        strike_rate : ((old_striker_runs*100)/(old_striker_balls)).toFixed(2)
+        strike_rate : ((old_striker_runs*100)/(old_striker_balls)).toFixed(2),
+        out_by : null
+
       } })
       this.setState({
         non_striker_batsman: old_striker,
@@ -672,7 +687,9 @@ increaseScoreBy5(){
         balls: old_striker_balls +1,
         fours: old_striker_fours,
         sixes: old_striker_sixes,
-       strike_rate : ((old_non_striker_runs*100)/(old_non_striker_balls)).toFixed(2)
+       strike_rate : ((old_non_striker_runs*100)/(old_non_striker_balls)).toFixed(2),
+       out_by : null
+
       }
     })
     if(this.state.balls_per_over >= 0){
@@ -690,7 +707,8 @@ increaseScoreBy5(){
          balls : this.state.striker.balls +1,
          strike_rate : ((this.state.striker.runs * 100)/(this.state.striker.balls)).toFixed(2),
          sixes : this.state.striker.sixes +1,
-         fours : this.state.striker.fours
+         fours : this.state.striker.fours,
+         out_by : this.state.striker.out_by
         },
         bowler : {
           runs : this.state.bowler.runs +6,
@@ -790,6 +808,7 @@ increaseScoreBy5(){
           strike_rate: 0,
           fours: 0,
           sixes: 0,
+          out_by : null
         },
         open_next_batsman_form: false });
       localStorage.setItem(
@@ -876,6 +895,19 @@ increaseScoreBy5(){
           runs : 0,
           wickets : 0,
         },
+        p_bowler :{
+          balls : 0,
+          maiden_count : 0,
+          overs : 0,
+          maidens : 0,
+          runs : 0,
+          wickets : 0,
+        },
+        open_initial_form: false,
+        open_next_batsman_form: false,
+        open_next_bowler_form: false,
+        open_end_match_form: false,
+        open_end_innings_form: false,
         striker_batsman: null,
         non_striker_batsman: null,
         current_bowler: null,
@@ -902,6 +934,7 @@ increaseScoreBy5(){
         strike_rate: this.state.striker.strike_rate,
         fours: this.state.striker.fours,
         sixes: this.state.striker.sixes,
+        out_by : this.state.striker.out_by
       };
   
       var non_striker_batsman = {
@@ -932,10 +965,20 @@ increaseScoreBy5(){
          maiden_overs : this.state.p_bowler.maidens,
          runs : this.state.p_bowler.runs,
          wickets : this.state.p_bowler.wickets
+       };
+       var score = {
+         match_id : this.state.match_id,
+         batting_team_score : this.state.batting_team_score,
+         batting_team_wickets : this.state.batting_team_wickets,
+         batting_team : this.state.batting_team,
+         bowling_team : this.state.bowling_team,
+         bowling_team_wickets : this.state.bowling_team_wickets,
+         bowling_team_score : this.state.bowling_team_score,
+        // batting_team_overs : this.state.total_overs
        }
-      console.log(striker_batsman);
-      console.log(non_striker_batsman);
-      console.log(current_bowler);
+      // console.log(striker_batsman);
+      // console.log(non_striker_batsman);
+      // console.log(current_bowler);
       ScorecardDataService.createBatsmanInAMatch(striker_batsman)
       .then(
         response => {
@@ -957,6 +1000,12 @@ increaseScoreBy5(){
             response => {
                 console.log(response);
             }); 
+        ScorecardDataService.createTotalMatchScore(score)
+          .then(
+            response => {
+                console.log(response);
+            }); 
+        
     };
   
     handleCreateBatsmanAfterBowled = () => {
