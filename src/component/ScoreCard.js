@@ -35,6 +35,7 @@ TabContainer.propTypes = {
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
+    backgroundColor:"#3F51B5"
   },
   indicator: {
     backgroundColor: 'red',
@@ -120,8 +121,8 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
         venue:response.data.venue 
         
     },()=>{
-     this.refreshBatsmen();
-      this.refreshBowlers();
+      this.refreshBatsmen();
+       this.refreshBowlers();
       console.log(this.state.t1bat);
       console.log(this.state.t2bowl);
     })
@@ -136,14 +137,14 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
       .then(
           response => {
               
-              this.setState({Bowlers: response.data },()=>{
-                this.state.Bowlers.map((bowl)=>{
+             
+                  response.data.map((bowl)=>{
                   if(bowl.team_name===this.state.team1)
                   this.state.t1bowl.push(bowl)
                   else
                   this.state.t2bowl.push(bowl)
-                })
-              })
+                 this.setState({Bowlers:response.data})
+          })
           }
       ); 
       
@@ -153,13 +154,13 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
     .then(
         response => {
             
-            this.setState({Batsmen: response.data },()=>{
-              this.state.Batsmen.map((bat)=>{
+            
+              response.data.map((bat)=>{
                 if(bat.team_name===this.state.team1)
                 this.state.t1bat.push(bat)
                 else
                 this.state.t2bat.push(bat)
-              })
+                this.setState({Batsmen:response.data})
             })
           }   
     )
@@ -256,11 +257,10 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
      
     ]  
     return(
-    
+   
                   <div>
                     <div>
-                     
-                    
+                 
                     <div className="match_header">
                        <div className="stadium">
                         {this.state.venue} 
@@ -289,7 +289,7 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
                      
 
                       <div  className="team_name">
-                              <AppBar position="static" >
+                              <AppBar position="static" style={{backgroundColor:"#3F51B5"}} >
                                 <Tabs  classes={{
                                         indicator: classes.indicator
                                     }}  variant="fullWidth" value={value}  style={{fontSize:"20px"}}  onChange={this.handleChange}>
@@ -309,13 +309,15 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
                                   /> 
                                   </div>
                                   <div className="table_div2">
-                                  <ReactTable  
+                                 {this.state.t2bowl.length>0 &&
+                                   <ReactTable  
                                     columns={columns2}  
                                     data={this.state.t2bowl}
                                     NoDataComponent={() => null}
                                     minRows={0}
                                     PaginationComponent="none"
                                   /> 
+                                 }
                                     </div> 
                                     </TabContainer>}
 
