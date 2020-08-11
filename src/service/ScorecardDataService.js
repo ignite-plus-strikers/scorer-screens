@@ -12,7 +12,6 @@ class ScorecardDataService {
     deleteSCORECARD(id) {
         return axios.delete(`${SCORECARD_API_URL}/sCORECARD/${id}`);
     }
-
     retrieveSCORECARD(id) {
         return axios.get(`${SCORECARD_API_URL}/sCORECARD/${id}`);
     }
@@ -28,8 +27,13 @@ class ScorecardDataService {
         deleteTeam(sCORECARDid,teamid){
             return axios.delete(`${SCORECARD_API_URL}/sCORECARD-teams/${sCORECARDid}/${teamid}`);
         } */
+        retrieveBatsmen(id) {
+            return axios.get(`${SCORECARD_API_URL}/batsman-by-match/${id}`);
+        }
 
-
+        retrieveBowlers(id){
+            return axios.get(`${SCORECARD_API_URL}/bowler-by-match/${id}`);
+        }
         getPreMatchData(id) {
             return axios.get(`${PRE_MATCH_API_URL}/pre-match/${id}`);
         }
@@ -55,6 +59,10 @@ class ScorecardDataService {
         }
         retrieveAllBowlersInAMatch(matchid) {
             return axios.get(`${SCORECARD_API_URL}/bowler-by-match/${matchid}`);
+        }
+
+        retrieveBowlerByName(matchid,bowlername) {
+            return axios.get(`${SCORECARD_API_URL}/bowler-by-match/${matchid}/${bowlername}`);
         }
 }
 

@@ -51,6 +51,8 @@ class MatchSelection extends React.Component{
       this.state={
         fixtures:[]
       };
+      this.PrematchScreenClicked = this.PrematchScreenClicked.bind(this)
+
     }
    
 
@@ -61,6 +63,9 @@ class MatchSelection extends React.Component{
             this.setState({fixtures:data});
           });
     }
+    PrematchScreenClicked(id) {
+      this.props.history.push(`/scorer/PreMatch/${id}`)
+  }
 
   render(){
     const {classes} = this.props;
@@ -141,7 +146,7 @@ class MatchSelection extends React.Component{
               </CardContent>
             <Divider />
             <CardActions>
-              <Button variant="contained" color="primary" href="/scorer/MatchSelection/prematch" disabled>Pre-match Screen</Button>
+              <Button variant="contained" color="primary"  onClick={() => this.PrematchScreenClicked(fixture.fixture_id)}>Pre-match Screen</Button>
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen"disabled>Scoring Screen</Button>
             </CardActions>
             </Card>
