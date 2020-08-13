@@ -136,7 +136,7 @@ class MatchSelection extends React.Component{
         {
         return(
         
-         
+          <div className={classes.node}>
             <Card className={classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
@@ -148,7 +148,7 @@ class MatchSelection extends React.Component{
               <Button variant="contained" color="primary" disabled>Pre-match Screen</Button>
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen"disabled>Scoring Screen</Button>
             </CardActions>
-            </Card>
+            </Card></div>
          
          
         );
