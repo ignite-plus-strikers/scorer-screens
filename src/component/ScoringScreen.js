@@ -274,7 +274,7 @@ else{
         }
       })
     }
-    //this.openNextBatsmanForm();
+    this.openNextBowlerForm();
   }
   window.localStorage.setItem('data',JSON.stringify(this.state))
   this.handleCreateBatsmanAfterBowled();

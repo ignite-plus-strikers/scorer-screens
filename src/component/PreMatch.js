@@ -15,7 +15,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from '@material-ui/core/FormControl';
 import Checkbox from "@material-ui/core/Checkbox";
 import Divider from "@material-ui/core/Divider";
-import { Grid } from "@material-ui/core";
+import { Grid,Container } from "@material-ui/core";
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import RefereeDataService from '../service/RefereeDataService';
 import TeamDataService from '../service/TeamDataService';
@@ -479,6 +479,7 @@ let fixtureid=this.state.fixture_id
     var team1_id
     var team2_id
     return (
+      <Container>
       <div> 
 
 
@@ -1222,7 +1223,7 @@ let fixtureid=this.state.fixture_id
         </Dialog>
 
   </div>
-          
+  </Container>    
         
     );
   }
