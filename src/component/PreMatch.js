@@ -137,7 +137,7 @@ class OutlinedInputAdornments extends React.Component {
     middle_name:"",
     last_name:"",
     teamplayers: [],
-    teamid: "3307b103-3c70-410a-ada9-c248dafa8157",
+   
     player_first_name: "",
     player_last_name: "",
     player_initials: "",
@@ -319,7 +319,7 @@ handleCaptainWicket = name=>event=>{
         team2_id:response.data.team2_id,
         series_name:response.data.series_name,
         fixture_date:response.data.fixture_date,
-        fixture_time:response.data.fixture_time,
+        fixture_time:response.data.fixture_start_time,
         venue:response.data.venue 
         
     },()=>{ TeamDataService.retrieveAllTeamPlayers(this.state.team1_id)
