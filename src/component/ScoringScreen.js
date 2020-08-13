@@ -100,6 +100,7 @@ class ScoringScreen extends React.Component {
       batting_team_score :JSON.parse(window.localStorage.getItem('data')).batting_team_score,
       batting_team_wickets :JSON.parse(window.localStorage.getItem('data')).batting_team_wickets,
       total_overs :JSON.parse(window.localStorage.getItem('data')).total_overs,
+      previous_team_overs: JSON.parse(window.localStorage.getItem('data')).previous_team_overs,
       balls_per_over : JSON.parse(window.localStorage.getItem('data')).balls_per_over,
       striker : {
         out_by : JSON.parse(window.localStorage.getItem('data')).striker.out_by,
@@ -158,6 +159,7 @@ else{
         batting_team_score : 0,
         batting_team_wickets : 0,
         total_overs : 0,
+        previous_team_overs: 0,
         balls_per_over : 0,
         striker : {
           out_by : null,
@@ -898,6 +900,7 @@ increaseScoreBy5(){
       var old_batting_team_score = this.state.batting_team_score;
       var old_batting_team_wickets = this.state.batting_team_wickets;
       var old_team1_players = this.state.team1_players;
+      var old_total_overs = this.state.total_overs;
       this.setState({
         batting_team: this.state.bowling_team,
         bowling_team: old_batting_team,
@@ -906,6 +909,7 @@ increaseScoreBy5(){
         batting_team_score : 0, 
         batting_team_wickets : 0, 
         total_overs : 0, 
+        previous_team_overs: old_total_overs,
         balls_per_over : 0,
         striker : {
           runs : 0,
@@ -1075,10 +1079,12 @@ increaseScoreBy5(){
           team1_result: {
             runs: this.state.batting_team_score,
             wickets: this.state.batting_team_wickets,
+            overs: this.state.total_overs
           },
           team2_result: {
             runs: this.state.bowling_team_score,
             wickets: this.state.bowling_team_wickets,
+            overs: 0
           },
         };
       } else {
@@ -1089,10 +1095,12 @@ increaseScoreBy5(){
           team2_result: {
             runs: this.state.batting_team_score,
             wickets: this.state.batting_team_wickets,
+            overs: this.state.total_overs
           },
           team1_result: {
             runs: this.state.bowling_team_score,
             wickets: this.state.bowling_team_wickets,
+            overs: this.state.previous_team_overs
           },
         };
       }
@@ -1112,10 +1120,12 @@ increaseScoreBy5(){
             team2_result: {
               runs: this.state.batting_team_score,
               wickets: this.state.batting_team_wickets,
+              overs: this.state.total_overs
             },
             team1_result: {
               runs: this.state.bowling_team_score,
               wickets: this.state.bowling_team_wickets,
+              overs: this.state.previous_team_overs
             },
             match_result: this.state.bowling_team,
             winning_score: {
@@ -1208,6 +1218,11 @@ increaseScoreBy5(){
       console.log(response);
     });
   }
+  handleSelect = e => {
+       
+    this.props.history.push(`/scorer/ScoreCard/${e}`)
+    
+}
 
    render(){
     const { classes } = this.props;
@@ -1220,7 +1235,7 @@ increaseScoreBy5(){
             {this.state.batting_team_wickets} ({this.state.total_overs}.{this.state.balls_per_over} Overs) //{" "}
             {this.state.bowling_team} {this.state.bowling_team_score}/
             {this.state.bowling_team_wickets}</Typography>
-        <Button variant="contained" color="primary" className={classes.button} href="/scorer/Scorecard">Scorecard</Button>
+        <Button variant="contained" color="primary" className={classes.button}  onClick={() => this.handleSelect(this.state.match_id)}>Scorecard</Button>
         </Grid>
         <br></br> 
         <br></br>

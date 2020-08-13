@@ -75,9 +75,14 @@ this.state={
   t1bat:[],
   t2bat:[],
   t1bowl:[],
-  t2bowl:[]
+  t2bowl:[],
+  match_result:null,
+  team1_result:{},
+  team2_result:{},
+  winning_score:{}
 }
 this.getFixturedetails=this.getFixturedetails.bind(this)
+this.getMatchResult=this.getMatchResult.bind(this)
 this.refreshBowlers=this.refreshBowlers.bind(this)
 this.refreshBatsmen=this.refreshBatsmen.bind(this)
   }
@@ -117,12 +122,13 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
         team2_id:response.data.team2_id,
         series_name:response.data.series_name,
         fixture_date:response.data.fixture_date,
-        fixture_time:response.data.fixture_time,
+        fixture_time:response.data.fixture_start_time,
         venue:response.data.venue 
         
     },()=>{
       this.refreshBatsmen();
        this.refreshBowlers();
+       this.getMatchResult();
       console.log(this.state.t1bat);
       console.log(this.state.t2bowl);
     })
@@ -165,6 +171,26 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
           }   
     )
   }
+  getMatchResult(){
+    ScorecardDataService.retrieveMatchResult(this.state.fixture_id)
+    .then(
+      response=>{this.setState({
+        match_result: response.data.match_result,
+        team1_result:response.data.team1_result,
+        team2_result:response.data.team2_result,
+        winning_score:response.data.winning_score
+       
+        
+    })
+
+      }
+    )
+  }
+  handleSelect = e => {
+       
+    this.props.history.push(`/scorer/ScoringScreen/${e}`)
+    
+}
 
 
   render(){
@@ -223,10 +249,15 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
       }
     ]  
     const columns2 = [{  
-      Header: 'Bowler',  
+      Header: () => (
+        <div
+          style={{
+            textAlign:"left"
+          }}
+        >Bowler</div>),  
       accessor: 'bowler_name',
       width:200,
-      Cell: row => <div style={{ textAlign: "center" }}>{row.value}</div>
+      Cell: row => <div style={{ textAlign: "left" }}>{row.value}</div>
       
       
       },{  
@@ -280,14 +311,29 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
                        
                      </div>
                      <hr></hr>
-
+                <div>
                     <center>
                      <h3>SCORE CARD</h3>
                       </center>
                   
                       <br/><br/>
-                     
-
+                      
+                    {this.state.match_result!==null && this.state.winning_score['runs'] && <div>
+                      <center>
+    <h3>{this.state.match_result} won by {this.state.winning_score['runs']} runs</h3>
+                      </center>
+                      <br/><br/>
+                      </div>
+                    }
+                    {this.state.match_result!==null && this.state.winning_score['wickets'] && <div>
+                      <center>
+    <h3>{this.state.match_result} won by {this.state.winning_score['wickets']} wickets</h3>
+                      </center>
+                      <br/><br/>
+                      </div>
+                    }
+                    
+                </div>
                       <div  className="team_name">
                               <AppBar position="static" style={{backgroundColor:"#3F51B5"}} >
                                 <Tabs  classes={{
@@ -298,7 +344,7 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
                                 </Tabs>
                               </AppBar>
                              
-                              {value == 0 && <TabContainer><div className="current_score" ><h3>WI 112/2 (Overs 8.3)</h3></div>
+                                  {value == 0 && <TabContainer><div className="current_score" ><h3>{this.state.team1} {this.state.team1_result['runs']}/{this.state.team1_result['wickets']} (Overs {this.state.team1_result['overs']} )</h3></div>
                                     <div className="table_div1">
                                   <ReactTable  
                                     columns={columns}  
@@ -306,23 +352,25 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
                                     NoDataComponent={() => null}
                                     minRows={0}
                                     PaginationComponent="none"
+                                    sortable={false}
                                   /> 
                                   </div>
                                   <div className="table_div2">
-                                 {this.state.t2bowl.length>0 &&
+                                
                                    <ReactTable  
                                     columns={columns2}  
                                     data={this.state.t2bowl}
                                     NoDataComponent={() => null}
                                     minRows={0}
+                                    sortable={false}
                                     PaginationComponent="none"
                                   /> 
-                                 }
+                                 
                                     </div> 
                                     </TabContainer>}
 
 
-                                    {value === 1 && <TabContainer><div className="current_score"><h3>PAK 240/8 (Overs 20)</h3></div>
+                                    {value === 1 && <TabContainer><div className="current_score"><h3>{this.state.team2} {this.state.team2_result['runs']}/{this.state.team2_result['wickets']} (Overs {this.state.team2_result['overs']} )</h3></div>
                                     <div className="table_div1">
                                   <ReactTable  
                                     columns={columns}  
@@ -330,6 +378,7 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
                                     NoDataComponent={() => null}
                                     minRows={0}
                                     PaginationComponent="none"
+                                    sortable={false}
                                   /> 
                                   </div>
                                   <div className="table_div2">
@@ -339,13 +388,14 @@ this.refreshBatsmen=this.refreshBatsmen.bind(this)
                                     NoDataComponent={() => null}
                                     minRows={0}
                                     PaginationComponent="none"
+                                    sortable={false}
                                   /> 
                                     </div> 
                                     </TabContainer>}
                       </div>
                     </div>
                     <div className="back">
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button variant="contained" color="primary" className={classes.button} onClick={() => this.handleSelect(this.state.fixture_id)}>
                       BACK
                     </Button>
                     </div>
