@@ -46,7 +46,7 @@ const useStyles = theme => ({
 var date = new Date();
 var todayDate = moment(date).format('YYYY-MM-DD')
 
-var time = moment(date).format('hh:mm:ss')
+var time = moment(date).format('HH:mm:ss')
 
 
 class MatchSelection extends React.Component{
@@ -81,7 +81,7 @@ class MatchSelection extends React.Component{
         {this.state.fixtures.map((fixture) => {if (moment(todayDate).isSame(fixture.fixture_date) && time>fixture.fixture_start_time && time<fixture.fixture_end_time) 
         {
         return(
-          <div className={classes.node}>
+         
               <Card className = {classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" color="primary" align="center">{fixture.team1} vs {fixture.team2}</Typography>
@@ -93,7 +93,7 @@ class MatchSelection extends React.Component{
               <Button variant="contained" color="primary" href="/scorer/prematch" onClick={() => this.PrematchScreenClicked(fixture.fixture_id)}>Pre-match Screen</Button>
               <Button variant="contained" color="primary" href="/scorer/ScoringScreen">Scoring Screen</Button>
             </CardActions>
-            </Card></div>
+            </Card>
           );
         }
         {/*else{
@@ -108,7 +108,7 @@ class MatchSelection extends React.Component{
         {this.state.fixtures.map((fixture) => {if (moment(todayDate).isSame(fixture.fixture_date) && time<fixture.fixture_start_time) 
         {
         return(
-          <div className={classes.node}>
+         
             <Card className={classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
@@ -120,7 +120,7 @@ class MatchSelection extends React.Component{
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/prematch" disabled>Pre-match Screen</Button>
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen"disabled>Scoring Screen</Button>
             </CardActions>
-            </Card></div>
+            </Card>
         );
       }
       {/*else{
@@ -136,7 +136,7 @@ class MatchSelection extends React.Component{
         {
         return(
         
-          <div className={classes.node}>
+         
             <Card className={classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
@@ -150,7 +150,7 @@ class MatchSelection extends React.Component{
             </CardActions>
             </Card>
          
-         </div>
+         
         );
       }
      }
