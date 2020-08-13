@@ -881,7 +881,7 @@ increaseScoreBy5(){
       var old_batting_team_score = this.state.batting_team_score;
       var old_batting_team_wickets = this.state.batting_team_wickets;
       var old_team1_players = this.state.team1_players;
-      var old_total_overs = this.state.previous_team_overs;
+      var old_total_overs = this.state.total_overs;
       this.setState({
         batting_team: this.state.bowling_team,
         bowling_team: old_batting_team,
