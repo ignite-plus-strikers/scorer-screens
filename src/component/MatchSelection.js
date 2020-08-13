@@ -34,7 +34,11 @@ const useStyles = theme => ({
     variant:'h4',
     color:'textSecondary',
     align:'center',
-  }
+  },
+  node: {
+    display: "flex",
+    float: "left"
+  },
 
 });
 
@@ -73,11 +77,11 @@ class MatchSelection extends React.Component{
       <Container>
        
         <Typography variant="h5" color="primary" align="center" style={{marginTop:20}}>Welcome Scorer! Happy Scoring! </Typography>
-    <Typography variant="h5" align="left" style={{marginTop:20,marginLeft:80}} >Live Match {time}</Typography> 
+    <Typography variant="h5" align="left" style={{marginTop:20,marginLeft:80}} >Live Match</Typography> 
         {this.state.fixtures.map((fixture) => {if (moment(todayDate).isSame(fixture.fixture_date) && time>fixture.fixture_start_time && time<fixture.fixture_end_time) 
         {
         return(
-          //alert(time,fixture.fixture_time);
+          <div className={classes.node}>
               <Card className = {classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" color="primary" align="center">{fixture.team1} vs {fixture.team2}</Typography>
@@ -86,10 +90,10 @@ class MatchSelection extends React.Component{
               </CardContent>
             <Divider />
             <CardActions>
-              <Button variant="contained" color="primary" href="/scorer/prematch">Pre-match Screen</Button>
+              <Button variant="contained" color="primary" href="/scorer/prematch" onClick={() => this.PrematchScreenClicked(fixture.fixture_id)}>Pre-match Screen</Button>
               <Button variant="contained" color="primary" href="/scorer/ScoringScreen">Scoring Screen</Button>
             </CardActions>
-            </Card>
+            </Card></div>
           );
         }
         {/*else{
@@ -104,9 +108,7 @@ class MatchSelection extends React.Component{
         {this.state.fixtures.map((fixture) => {if (moment(todayDate).isSame(fixture.fixture_date) && time<fixture.fixture_start_time) 
         {
         return(
-        
-        <Grid container spacing={6} direction="row" justify="flex-start" alignItems="flex-start">
-          <Grid item >
+          <div className={classes.node}>
             <Card className={classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
@@ -118,9 +120,7 @@ class MatchSelection extends React.Component{
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/prematch" disabled>Pre-match Screen</Button>
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen"disabled>Scoring Screen</Button>
             </CardActions>
-            </Card>
-          </Grid>
-          </Grid>
+            </Card></div>
         );
       }
       {/*else{
@@ -136,8 +136,7 @@ class MatchSelection extends React.Component{
         {
         return(
         
-        <Grid container spacing={6} direction="row" justify="flex-start" alignItems="flex-start">
-          <Grid item >
+          <div className={classes.node}>
             <Card className={classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
@@ -146,13 +145,12 @@ class MatchSelection extends React.Component{
               </CardContent>
             <Divider />
             <CardActions>
-              <Button variant="contained" color="primary"  onClick={() => this.PrematchScreenClicked(fixture.fixture_id)}>Pre-match Screen</Button>
+              <Button variant="contained" color="primary" disabled>Pre-match Screen</Button>
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen"disabled>Scoring Screen</Button>
             </CardActions>
             </Card>
-          </Grid>
-          <Pagination style={{marginLeft:400, marginTop:10}} count={10} />
-          </Grid>
+         
+         </div>
         );
       }
      }

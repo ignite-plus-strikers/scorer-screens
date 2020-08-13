@@ -37,13 +37,14 @@ class App extends Component{
     return(
       <MuiThemeProvider theme={theme}>
         <Header />
-        <div style={{marginLeft:1350,marginTop:10}}><Clock /></div>
+        <div style={{marginLeft:1150,marginTop:10}}><Clock /></div>
         <Router>
       
           <Route exact path="/scorer/MatchSelection" component={MatchSelection} />
           <Route path="/scorer/PreMatch/:id" component={PreMatch} />
           <Route path="/scorer/ScoringScreen/:id" component={ScoringScreen} />
           <Route path="/scorer/ScoreCard/:id" component={ScoreCard} />
+          
         </Router>
         
       </MuiThemeProvider>
