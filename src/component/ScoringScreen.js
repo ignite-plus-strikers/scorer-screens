@@ -317,6 +317,21 @@ else{
         balls : this.state.bowler.balls +1,
       }
     });
+    if(this.state.balls_per_over === 5){
+      this.setState({
+        balls_per_over : 0,
+        total_overs : this.state.total_overs +1,
+        bowler : {
+          overs : this.state.bowler.overs + 1,
+           runs : this.state.bowler.runs ,
+           balls : 0,
+           wickets : this.state.bowler.wickets,
+           maidens :this.state.bowler.maidens,
+           maiden_count : 0
+        }
+      })
+      this.openNextBowlerForm();
+    }
     if(this.state.balls_per_over >= 0){
       this.handleCreateAfterOver();
     }
@@ -324,13 +339,7 @@ else{
   }
 
   increaseScoreBy0(){
-    /* if (
-      this.state.striker_batsman === null ||
-      this.state.non_striker_batsman === null ||
-      this.state.current_bowler === null
-    ) {
-      alert("Players not selected!");
-    } */
+   
     this.setState({
         balls_per_over : this.state.balls_per_over +1,
         striker : {

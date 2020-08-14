@@ -42,7 +42,7 @@ const useStyles = theme => ({
 var date = new Date();
 var todayDate = moment(date).format('YYYY-MM-DD')
 
-var time = moment(date).format('hh:mm:ss')
+var time = moment(date).format('HH:mm:ss')
 
 
 class MatchSelection extends React.Component{
@@ -86,7 +86,7 @@ class MatchSelection extends React.Component{
               </CardContent>
             <Divider />
             <CardActions>
-              <Button variant="contained" color="primary" href="/scorer/prematch">Pre-match Screen</Button>
+              <Button variant="contained" color="primary" onClick={() => this.PrematchScreenClicked(fixture.fixture_id)}>Pre-match Screen</Button>
               <Button variant="contained" color="primary" href="/scorer/ScoringScreen">Scoring Screen</Button>
             </CardActions>
             </Card>
