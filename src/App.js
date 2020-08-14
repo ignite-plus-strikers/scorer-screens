@@ -43,6 +43,7 @@ class App extends Component{
           <Route path="/scorer/PreMatch/:id" component={PreMatch} />
           <Route path="/scorer/ScoringScreen/:id" component={ScoringScreen} />
           <Route path="/scorer/ScoreCard/:id" component={ScoreCard} />
+          
         </Router>
         
       </MuiThemeProvider>
