@@ -108,7 +108,7 @@ class MatchSelection extends React.Component{
         {this.state.fixtures.map((fixture) => {if (moment(todayDate).isSame(fixture.fixture_date) && time<fixture.fixture_start_time) 
         {
         return(
-         
+         <div className={classes.node}>
             <Card className={classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
@@ -120,7 +120,7 @@ class MatchSelection extends React.Component{
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/prematch" disabled>Pre-match Screen</Button>
               <Button variant="contained" color="primary" href="/scorer/MatchSelection/ScoringScreen"disabled>Scoring Screen</Button>
             </CardActions>
-            </Card>
+            </Card></div>
         );
       }
       {/*else{
