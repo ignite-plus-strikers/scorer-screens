@@ -135,13 +135,8 @@ class MatchSelection extends React.Component{
      {this.state.fixtures.map((fixture) => {if (moment(todayDate).isBefore(fixture.fixture_date)) 
         {
         return(
-<<<<<<< HEAD
-        <Grid container spacing={6} direction="row" justify="flex-start" alignItems="flex-start">
-          <Grid item >
-=======
         
           <div className={classes.node}>
->>>>>>> 8295e52ed9a2491ffa22049028b9b802293c389d
             <Card className={classes.root} variant="outlined">
               <CardContent>
               <Typography variant="h5" align="center" color="primary">{fixture.team1} vs {fixture.team2}</Typography>
